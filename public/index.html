@@ -6,7 +6,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600&display=swap" rel="stylesheet">
 
-
     </head>
 
     <body>
@@ -15,15 +14,36 @@
         <div id="main">
 
             <form id="inputfields" action="">
-                <input v-model="title" type="text" name="title" placeholder= "title">
                 
-                <input v-model="description" type="text" name="description" placeholder= "description">
-                
-                <input v-model="username" type="text" name="username" placeholder= "username">
+                <div class="flexbox">
+                    
+                    <div>
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <input id="title" v-model="title" type="text" name="title" placeholder= "title">
+                    </div>
 
-                <input @change="handleChange" type="file" name="file" accept="image/*">
-                
-                <button @click="handleClick">upload</button>
+                    <div>
+                         <ion-icon name="cloud-upload-outline"></ion-icon>
+                        <input id="inputfile" @change="handleChange" type="file" name="file" accept="image/*" />
+                    </div>
+                </div>
+
+                <div>
+                    <ion-icon name="create-outline"></ion-icon>
+                    <input id="description" v-model="description" type="text" name="description" placeholder= "description">
+                </div>
+
+                <div class="flexbox">
+
+                    <div>
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                        <input id="username" v-model="username" type="text" name="username" placeholder= "username">
+                    </div>
+
+                    <button @click="handleClick">upload</button>
+
+                </div>
+
             </form>
 
                 <div class="image" v-for="image in images">
@@ -35,5 +55,6 @@
         <script src="/js/vue.js"></script>
         <script src="/js/axios.min.js"></script>
         <script src="/js/script.js"></script>
+        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     </body>
 </html>
