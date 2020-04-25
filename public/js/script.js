@@ -1,6 +1,36 @@
 // console.log("running");
 
 (function () {
+    // Vue.component("modal-component", {
+    //     // first argument: "modal-component" = name of our component
+    //     template: "#modal-template", // second argument: object with id/# ("modal-template") we gave in our script-tag in index.html
+    //     props: [], // array, names camelCase, refers to "selectedModal" in index.html
+    //     mounted: function () {
+    //         console.log("postTitle:", this.postTitle);
+    //         console.log("id in mounted of my component:", this.id);
+    //         // we can now make a request to the server sending the id and ask
+    //         // for all the information about that id
+    //     }, // mounted ends
+    //     data: function () {
+    //         // data as a function which returns an object
+    //         return {
+    //             toggle: false,
+
+    //             image: {
+    //                 image.title = whateverWeGetBackFromTheServer,
+    //                 ...
+    //             }
+    //         };
+    //     }, // date ends
+    //     methods: {
+    //         closeModal: function () {
+    //             console.log("I am emitting from the component... (child)");
+    //             this.$emit("modal");
+    //         },
+    //     },
+    //     template: "#modal-template",
+    // });
+
     new Vue({
         el: "#main",
         data: {
@@ -30,7 +60,7 @@
                 });
         }, // mounted ends
         methods: {
-            handleClick: function (e) {
+            uploadButtonClick: function (e) {
                 // prevents the page from reloading:
                 e.preventDefault();
 

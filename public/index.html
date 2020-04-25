@@ -5,7 +5,8 @@
         <link rel="stylesheet" href="/css/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600&display=swap" rel="stylesheet">
-
+        <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
     </head>
 
     <body>
@@ -23,38 +24,64 @@
                     </div>
 
                     <div>
-                         <ion-icon name="cloud-upload-outline"></ion-icon>
-                        <input id="inputfile" @change="handleChange" type="file" name="file" accept="image/*" />
+                        <ion-icon name="create-outline"></ion-icon>
+                        <input id="description" v-model="description" type="text" name="description" placeholder= "description">
                     </div>
-                </div>
 
-                <div>
-                    <ion-icon name="create-outline"></ion-icon>
-                    <input id="description" v-model="description" type="text" name="description" placeholder= "description">
                 </div>
-
+                
                 <div class="flexbox">
 
                     <div>
                         <ion-icon name="person-circle-outline"></ion-icon>
                         <input id="username" v-model="username" type="text" name="username" placeholder= "username">
                     </div>
-
-                    <button @click="handleClick">upload</button>
+                
+                    <div>
+                         <ion-icon name="cloud-upload-outline"></ion-icon>
+                        <input id="inputfile" @change="handleChange" type="file" required name="file" accept="image/*" />
+                    </div>
 
                 </div>
+
+                <button @click="uploadButtonClick">upload</button>
 
             </form>
 
                 <div class="image" v-for="image in images">
-                    <img class="cover" :src="image.url" />
-                    <label for=image>{{image.title}}</label>
+                    <img class="cover" :src="image.url" :alt="image.description" />
+                    <label maxlength="33" for=image>{{image.title}}</label>
                 </div>
+
+                <!-- <modal-component
+                    v-if="selectedModal"
+                    modal-title="hello"
+                    :id="selectedModal"
+                    @close="closeMe">
+                </modal-component>
+
+                <p
+                    class="modal"
+                    @click="selectedModal = modal.id" -->
+                    <!-- If I click on `selectedModal` it gets the id of the corresponding modal -->
+                    <!-- v-for="modal in modals"
+                    v-if="modals.length">{{modal.title}}
+                </p> -->
+
         </div>
+
+        <!-- <script type="text/x-template" id="modal-template">
+            <div class="component">
+                <h1 @click="closeModal">This is my first template</h1>
+                <h2>Hello {{ name }}</h2>
+                <button @click="count++">Click Me!</button>
+                <h3>Count: {{ count }}</h3>
+            </div>
+        </script> -->
 
         <script src="/js/vue.js"></script>
         <script src="/js/axios.min.js"></script>
         <script src="/js/script.js"></script>
-        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+
     </body>
 </html>

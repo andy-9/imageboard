@@ -5,6 +5,7 @@ const s3 = require("./s3");
 const config = require("./config");
 
 app.use(express.static("public"));
+app.use(express.json());
 
 ////////////////// IMAGE UPLOAD BOILERPLATE //////////////////
 // multer saves files to our hard drive:
