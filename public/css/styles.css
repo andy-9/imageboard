@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "RuthlessWreckinOne-7YlK";
+    src: url("/RuthlessWreckinOne-7YlK.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SpriteGraffiti-Shadow";
+    src: url("/SpriteGraffiti-Shadow.woff2") format("woff2");
+}
+
 * {
     max-width: 100%;
     box-sizing: border-box;
@@ -6,16 +16,21 @@
 }
 
 body {
-    background-image: url(/full-bloom.png);
-    /* background-image: url(/more-leaves.png); */
+    background-image: url(/patterns/white-waves.png);
+    /* background-image: url(/patterns/old_map_@2X.png); */
+    /* background-image: url(/patterns/full-bloom.png); */
+    /* background-image: url(/patterns/memphis-colorful.png); */
+    /* background-image: url(/patterns/congruent_pentagon.png); */
+    /* background-image: url(/patterns/more-leaves.png); */
 }
 
 h1 {
-    font-family: "Permanent Marker", cursive;
+    /* letter-spacing: 13px; */
+    /* font-family: "Permanent Marker", cursive; */
+    font-family: RuthlessWreckinOne-7YlK;
     font-size: 70px;
-    letter-spacing: 13px;
     text-align: center;
-    padding-bottom: 50px;
+    text-shadow: 5px 5px 2px #c62828;
 }
 
 #main {
@@ -118,7 +133,7 @@ button:focus {
 
 .image {
     background-color: white;
-    height: 400px;
+    height: 300px;
     width: 100%;
     margin: 0;
     border: 1px solid grey;
@@ -128,34 +143,40 @@ button:focus {
 
 img {
     width: 100%;
-    height: 90%;
+    height: 88%;
     padding: 1%;
     object-fit: cover;
     overflow: hidden;
     border-radius: 5% 5% 0 0;
 }
 
-.image label {
-    font-family: "Baloo Tamma 2", cursive;
+figcaption {
+    font-family: SpriteGraffiti-Shadow;
+    /* font-family: "Baloo Tamma 2", cursive; */
     font-size: 24px;
 }
 
 /* ////////////////////////// MODAL ////////////////////////// */
 
 .component {
+    background-image: url(/patterns/so-white.png);
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: red;
+    top: 5%;
+    right: 5%;
+    bottom: 5%;
+    left: 5%;
+    opacity: 0.95;
 }
 
 #x {
+    font-family: "SpriteGraffiti-Shadow";
     cursor: pointer;
     position: absolute;
     top: 5px;
     right: 5px;
+}
+
+#img-modal {
 }
 
 @media screen and (min-width: 320px) and (max-width: 540px) {

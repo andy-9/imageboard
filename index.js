@@ -8,6 +8,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 ////////////////// IMAGE UPLOAD BOILERPLATE //////////////////
+
 // multer saves files to our hard drive:
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -37,6 +38,7 @@ const uploader = multer({
 ////////////////// GET AND POST ROUTES //////////////////
 
 ////////// GET DATA FOR SITE //////////
+
 app.get("/images", (req, res) => {
     db.getInfoAndImage()
         .then((results) => {
@@ -49,6 +51,7 @@ app.get("/images", (req, res) => {
 });
 
 ////////// POST DATA FROM SITE - UPLOAD TO AWS & PUT IN DATABASE //////////
+
 // "single" is a method of uploader
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     // console.log("index.js POST /upload, uploaded (req.)file:", req.file); // uploaded file
@@ -88,6 +91,20 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             success: false,
         });
     }
+});
+
+////////// GET DATA FOR MODULE //////////
+
+app.get("/modal-id/:id", (req, res) => {
+    console.log("req.params.id", req.params.id);
+    db.getModalInfo(req.params.id)
+        .then((results) => {
+            console.log("results for modal:", results);
+            res.json(results);
+        })
+        .catch((err) => {
+            console.log("index.js, catch for getModalInfo:", err);
+        });
 });
 
 app.listen(8080, () => console.log("index.js: IB server is listening."));

@@ -10,14 +10,36 @@
         props: ["modalTitle", "id"], // array, names camelCase, refers to modal inside main div in index.html
 
         mounted: function () {
-            console.log(
-                "script.js, modalTitle in mounted of my component:",
-                this.modalTitle
-            );
-            console.log("script.js, Vue.component, mounted, id:", this.id);
             var each = this;
-            // we can now make an axios-request to the server sending the id and ask
-            // for all the information about that id, get.then.catch
+            console.log(
+                "script.js, modalTitle in mounted in my Vue.component:",
+                each.modalTitle
+            ); // refers to modal inside main div in index.html
+            console.log(
+                "script.js, id in mounted in my Vue.component:",
+                each.id
+            ); // refers to modal inside main div in index.html
+
+            // axios-request to the server.js sending the id --> get all the information for that id
+            axios
+                .get("/modal-id/" + each.id)
+                .then(function (response) {
+                    console.log(
+                        "script.js, axios in Vue component, response.data",
+                        response.data
+                    );
+                    each.image = response.data;
+                    console.log(
+                        "script.js, each.images after axios in Vue.component:",
+                        each.image
+                    );
+                })
+                .catch(function (err) {
+                    console.log(
+                        "script.js, catch in axios.get /modal-id/:id in Vue.component:",
+                        err
+                    );
+                });
         }, // mounted ends
 
         data: function () {
@@ -25,10 +47,7 @@
             return {
                 // returns a "fresh" copy of the data in main Vue
                 // toggle: false,
-
                 image: {
-                    // whateverWeGetBackFromTheServer
-                    count: 0, // do I need this?
                     url: "",
                     title: "",
                     description: "",
@@ -54,6 +73,7 @@
 
         data: {
             selectedImage: null,
+            // seen: true,
             images: [],
             title: "",
             description: "",
@@ -130,6 +150,7 @@
                 // this.file = null; // does not work
                 this.$refs.file.value = "";
             },
+
             handleChange: function (e) {
                 console.log(
                     "script.js, handleChange is running in methods in main Vue"
@@ -140,6 +161,7 @@
                 );
                 this.file = e.target.files[0];
             },
+
             closeModal: function () {
                 console.log(
                     "script.js, closeModal is running in methods in main Vue"

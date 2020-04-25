@@ -10,8 +10,7 @@
     </head>
 
     <body>
-        <h1>Post your image</h1>
-
+        <h1>-> Graffiti * Street Art <-</h1>
         
         <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
         <div id="main">
@@ -53,29 +52,21 @@
             </form>
 
 
-            <!-- ///////// MODAL COMPONENT INSIDE "MAIN" DIV ///////// -->
-
-            <modal-component
-                v-if="selectedImage"
-                modal-title="show me" <!-- necessary? -->
-                :id="selectedImage"
-                @close="closeModal"
-            ></modal-component> <!-- hier ggf. die <> verrücken -->
-
-
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
             <div class="image" v-for="image in images" @click="selectedImage = image.id">
                 <img class="cover" :src="image.url" :alt="image.description" />
-                <label for=image>{{image.title}}</label> <!-- maybe use <figcaption>? -->
+                <figcaption for=image>{{image.title}}</figcaption>
             </div>
 
-            <!-- <p
-                class="modal"
-                @click="selectedModal = modal.id"
-                <!-- If I click on `selectedModal` it gets the id of the corresponding modal -->
-                <!-- v-for="modal in modals"
-                v-if="modals.length">{{modal.title}}
-            </p> --> -->
+
+            <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
+
+            <modal-component
+                v-if="selectedImage"
+                modal-title="show me"
+                :id="selectedImage"
+                @close="closeModal"
+            ></modal-component>
 
         </div>
 
@@ -83,20 +74,19 @@
         <!-- ///////////////////// OUTSIDE OF MAIN DIV ///////////////////// -->
 
         <!-- ///////// MODAL COMPONENT OUTSIDE "MAIN" DIV ///////// -->
-
+        <!-- template for "modal-component" inside the main div: -->
+        <!-- "modal-template" = name of template in Vue.component -->
         <script type="text/x-template" id="modal-template">
             <div class="component">
-                <p id="x" @click="closeModal">x</p>
-                <img :src="image.url" :alt="image.description">
-                <label> Title: {{image.title}}</label> <!-- maybe use <figcaption> or a heading? -->
+                <p id="x" @click="closeModal">X</p>
+                <img id="img-modal" :src="image.url" :alt="image.description">
+                <figcaption> Title: {{image.title}}</figcaption>
                 <p>Description: {{image.description}}</p>
                 <p>Uploaded by {{image.username}} on {{image.created_at}}</p>
-                <button @click="count++">Click Me!</button> <!-- necessary? -->
-                <p>Counter: {{count}}</p> <!-- necessary? -->
-                <!-- include post-form for comments with input-comment, input-commenter and button -->
-                <!-- render comments with v-for -->
             </div>
         </script>
+        <!-- render comments with v-for -->
+        <!-- include post-form for comments with input-comment, input-commenter and button -->
 
         <script src="/js/vue.js"></script>
         <script src="/js/axios.min.js"></script>
