@@ -44,21 +44,21 @@ app.get("/images", (req, res) => {
             res.json(results.reverse());
         })
         .catch((err) => {
-            console.log("catch for getImages in index.js:", err);
+            console.log("index.js, catch for getInfoAndImage:", err);
         });
 });
 
 ////////// POST DATA FROM SITE - UPLOAD TO AWS & PUT IN DATABASE //////////
 // "single" is a method of uploader
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("index.js POST /upload, uploaded (req.)file:", req.file); // uploaded file
+    // console.log("index.js POST /upload, uploaded (req.)file:", req.file); // uploaded file
     filename = req.file.filename;
     console.log("index.js POST /upload, changed filename:", filename);
     console.log("index.js POST /upload, config.s3Url", config.s3Url);
     let url = config.s3Url + filename;
     console.log("index.js POST /upload, complete new url:", url);
 
-    console.log("index.js POST /upload, uploaded input:", req.body); // input fields from client
+    // console.log("index.js POST /upload, uploaded input:", req.body); // input fields from client
     username = req.body.username;
     console.log("index.js POST /upload, username:", username);
     title = req.body.title;

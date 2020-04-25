@@ -12,7 +12,11 @@
     <body>
         <h1>Post your image</h1>
 
+        
+        <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
         <div id="main">
+
+            <!-- ///////// INPUT FIELDS ///////// -->
 
             <form id="inputfields" action="">
                 
@@ -20,7 +24,7 @@
                     
                     <div>
                         <ion-icon name="information-circle-outline"></ion-icon>
-                        <input id="title" v-model="title" type="text" name="title" placeholder= "title">
+                        <input id="title" v-model="title" type="text" maxlength="33" name="title" placeholder= "title">
                     </div>
 
                     <div>
@@ -39,7 +43,7 @@
                 
                     <div>
                          <ion-icon name="cloud-upload-outline"></ion-icon>
-                        <input id="inputfile" @change="handleChange" type="file" required name="file" accept="image/*" />
+                        <input id="inputfile" @change="handleChange" type="file" required name="file" ref="file" accept="image/*" />
                     </div>
 
                 </div>
@@ -48,36 +52,51 @@
 
             </form>
 
-                <div class="image" v-for="image in images">
-                    <img class="cover" :src="image.url" :alt="image.description" />
-                    <label maxlength="33" for=image>{{image.title}}</label>
-                </div>
 
-                <!-- <modal-component
-                    v-if="selectedModal"
-                    modal-title="hello"
-                    :id="selectedModal"
-                    @close="closeMe">
-                </modal-component>
+            <!-- ///////// MODAL COMPONENT INSIDE "MAIN" DIV ///////// -->
 
-                <p
-                    class="modal"
-                    @click="selectedModal = modal.id" -->
-                    <!-- If I click on `selectedModal` it gets the id of the corresponding modal -->
-                    <!-- v-for="modal in modals"
-                    v-if="modals.length">{{modal.title}}
-                </p> -->
+            <modal-component
+                v-if="selectedImage"
+                modal-title="show me" <!-- necessary? -->
+                :id="selectedImage"
+                @close="closeModal"
+            ></modal-component> <!-- hier ggf. die <> verrücken -->
+
+
+            <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
+            <div class="image" v-for="image in images" @click="selectedImage = image.id">
+                <img class="cover" :src="image.url" :alt="image.description" />
+                <label for=image>{{image.title}}</label> <!-- maybe use <figcaption>? -->
+            </div>
+
+            <!-- <p
+                class="modal"
+                @click="selectedModal = modal.id"
+                <!-- If I click on `selectedModal` it gets the id of the corresponding modal -->
+                <!-- v-for="modal in modals"
+                v-if="modals.length">{{modal.title}}
+            </p> --> -->
 
         </div>
 
-        <!-- <script type="text/x-template" id="modal-template">
+
+        <!-- ///////////////////// OUTSIDE OF MAIN DIV ///////////////////// -->
+
+        <!-- ///////// MODAL COMPONENT OUTSIDE "MAIN" DIV ///////// -->
+
+        <script type="text/x-template" id="modal-template">
             <div class="component">
-                <h1 @click="closeModal">This is my first template</h1>
-                <h2>Hello {{ name }}</h2>
-                <button @click="count++">Click Me!</button>
-                <h3>Count: {{ count }}</h3>
+                <p id="x" @click="closeModal">x</p>
+                <img :src="image.url" :alt="image.description">
+                <label> Title: {{image.title}}</label> <!-- maybe use <figcaption> or a heading? -->
+                <p>Description: {{image.description}}</p>
+                <p>Uploaded by {{image.username}} on {{image.created_at}}</p>
+                <button @click="count++">Click Me!</button> <!-- necessary? -->
+                <p>Counter: {{count}}</p> <!-- necessary? -->
+                <!-- include post-form for comments with input-comment, input-commenter and button -->
+                <!-- render comments with v-for -->
             </div>
-        </script> -->
+        </script>
 
         <script src="/js/vue.js"></script>
         <script src="/js/axios.min.js"></script>
