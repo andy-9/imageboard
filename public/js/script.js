@@ -61,6 +61,58 @@
         }, // data ends
 
         methods: {
+            // get current comment
+            postComment: function (e) {
+                // prevents the page from reloading:
+                e.preventDefault();
+
+                // 'this' allows me to see all the properties of data
+                console.log(
+                    "script.js, 'this' in methods in component Vue:",
+                    this
+                );
+
+                username = this.username;
+                console.log(
+                    "script.js, method postComment, username:",
+                    username
+                );
+                comment = this.comment;
+                console.log("script.js, method postComment, comment:", comment);
+                image_id = this.id;
+                console.log(
+                    "script.js, method postComment, image_id:",
+                    image_id
+                );
+
+                var each = this;
+
+                axios
+                    .post("/comment")
+                    .then(function (response) {
+                        console.log(
+                            "script.js, POST /comment in axios in methods in component Vue, getComment.data:",
+                            response.data
+                        );
+                        console.log(
+                            "script.js, POST /comment in axios in methods in component Vue, resp.data.userProp:",
+                            response.data.userProp
+                        );
+                        // data from index.js added to index 0 in data in this file:
+                        each.comments.unshift(response.data.userProp);
+                    })
+                    .catch(function (err) {
+                        console.log(
+                            "script.js, catch in axios POST /comment in methods in component Vue:",
+                            err
+                        );
+                    });
+                // clear input fields:
+                this.comment = "";
+                this.username = "";
+            },
+
+            // close modal
             closeModal: function () {
                 console.log(
                     "script.js, Vue.component, method closeModal, emitting"
@@ -114,7 +166,7 @@
                 e.preventDefault();
 
                 // 'this' allows me to see all the properties of data
-                console.log("script.js, this in methods in main Vue:", this);
+                console.log("script.js, 'this' in methods in main Vue:", this);
 
                 // we NEED to use FormData to send a file to the server
                 var formData = new FormData();

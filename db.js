@@ -40,11 +40,21 @@ module.exports.getComments = (image_id) => {
     return db
         .query(
             `SELECT * FROM comments
-            WHERE image_id=$1`,
+        WHERE image_id=$1`,
             [image_id]
         )
         .then((result) => {
             // console.log("result in db.js in getComments:", result.rows);
             return result.rows;
         });
+};
+
+// INSERT CURRENT COMMENT IN TABLE "COMMENTS"
+module.exports.insertCurrentComment = (username, comment, image_id) => {
+    return db.query(
+        `INSERT INTO comments (username, comment, image_id)
+        VALUES ($1, $2, $3)
+        RETURNING comment, username;`,
+        [username, comment, image_id]
+    );
 };

@@ -132,5 +132,31 @@ app.get("/modal-id/:id", (req, res) => {
 });
 
 ////////// GET COMMENTS FOR MODULE //////////
+app.post("/comment", (req, res) => {
+    console.log("index.js POST /comment, req.params:", req.params);
+    console.log("index.js POST /comment, req.body:", req.body);
+    username = req.body.username;
+    console.log("index.js POST /comment, username:", username);
+    comment = req.body.comment;
+    console.log("index.js POST /comment, comment:", comment);
+    image_id = req.body.image_id;
+    console.log("index.js POST /comment, image_id:", image_id);
+
+    db.insertCurrentComment(username, comment, image_id)
+        .then((currentComment) => {
+            console.log("RETURNING INSERT data from database:", currentComment);
+            userProp = currentComment.rows[0];
+            console.log(
+                "index.js POST /comment, response from db.insertCurrentComment, userProp:",
+                userProp
+            );
+            res.json({
+                userProp,
+            });
+        })
+        .catch((err) => {
+            console.log("catch in POST /comment to database", err);
+        });
+});
 
 app.listen(8080, () => console.log("index.js: IB server is listening."));

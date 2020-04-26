@@ -88,16 +88,18 @@
                     <h2>Props</h2>
 
                     <div>
-                        <ion-icon class="props-icon" name="create-outline"></ion-icon>
-                        <input class="props-input" v-model="comment" type="text" name="comment" placeholder= "props">
-                    </div>
+                        <div>
+                            <ion-icon class="props-icon" name="create-outline"></ion-icon>
+                            <input class="props-input" v-model="comment" type="text" name="comment" placeholder= "props">
+                        </div>
 
-                    <div>
-                        <ion-icon class="props-icon" name="person-circle-outline"></ion-icon>
-                        <input class="props-input" v-model="name" type="text" name="name" placeholder= "username">
-                    </div>
+                        <div>
+                            <ion-icon class="props-icon" name="person-circle-outline"></ion-icon>
+                            <input class="props-input" v-model="username" type="text" name="username" placeholder= "username">
+                        </div>
 
-                    <!-- <button id="props-button" @click="postComment">submit</button> -->
+                        <button id="props-button" @click="postComment">submit</button>
+                    </div>
 
                     <div class="props-container" v-for="comment in comments" v-if="comments.length">
                         <p class="props-commenter">"{{ comment.comment }}"</p>
@@ -138,8 +140,7 @@
 
             </div>
         </script>
-        <!-- render comments with v-for -->
-        <!-- include post-form for comments with input-comment, input-commenter and button -->
+
 
         <script src="/js/vue.js"></script>
         <script src="/js/axios.min.js"></script>
