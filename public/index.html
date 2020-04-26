@@ -4,7 +4,7 @@
         <title>Imageboard</title>
         <link rel="stylesheet" href="/css/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600&display=swap" rel="stylesheet">
         <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
     </head>
@@ -79,7 +79,7 @@
         <script type="text/x-template" id="modal-template">
             <div class="component">
                 
-                <img id="img-modal" :src="image[0].url" :alt="image[0].description">
+                <img id="img-modal" :src="image.url" :alt="image.description">
                 
                 <div class="comments">
 
@@ -97,11 +97,18 @@
                         <input class="props-input" v-model="name" type="text" name="name" placeholder= "username">
                     </div>
 
-                    <!-- <button id="modal-button" @click="modalButton">submit</button> -->
+                    <!-- <button id="props-button" @click="postComment">submit</button> -->
 
-                    <div>
-                        <p>{{ comment }}</p>
-                        <p>{{ username }} on {{ date }}</p>
+                    <div class="props-container" v-for="comment in comments" v-if="comments.length">
+                        <p class="props-commenter">"{{ comment.comment }}"</p>
+                        
+                        <div class="flexbox-modal">
+                            <ion-icon class="icon-props" name="person-circle-outline"></ion-icon>
+                            <p class="props-commenter-thin">{{ comment.username }}</p>
+                            <ion-icon class="icon-props distance" name="calendar-outline"></ion-icon>
+                            <p class="props-commenter-thin">{{ comment.created_at }}</p>
+                        </div>
+
                     </div>
 
                 </div>
@@ -109,22 +116,22 @@
                 <div id="image-info">
                     <div class="flexbox-modal">
                         <ion-icon class="icon-modal" name="information-circle-outline"></ion-icon>
-                        <figcaption class="img-title-modal"><b>Title:</b> {{ image[0].title }}</figcaption>
+                        <figcaption class="img-title-modal"><b>Title:</b> {{ image.title }}</figcaption>
                     </div>
 
                     <div class="flexbox-modal">
                         <ion-icon class="icon-modal" name="create-outline"></ion-icon>
-                        <p class="img-modal-description"><b>Description:</b> {{ image[0].description }}</p>
+                        <p class="img-modal-description"><b>Description:</b> {{ image.description }}</p>
                     </div>
 
                     <div class="flexbox-modal">
                         <ion-icon class="icon-modal" name="person-circle-outline"></ion-icon>
-                        <p class="img-modal-username"><b>Uploaded by:</b> {{ image[0].username }}</p>
+                        <p class="img-modal-username"><b>Uploaded by:</b> {{ image.username }}</p>
                     </div>
                         
                     <div class="flexbox-modal">
                         <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
-                        <p class="img-modal-date"><b>Date:</b> {{ image[0].created_at }}</p>
+                        <p class="img-modal-date"><b>Date:</b> {{ image.created_at }}</p>
                     </div>
 
                 </div>

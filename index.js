@@ -101,9 +101,9 @@ app.get("/modal-id/:id", (req, res) => {
 
     // get image info for modal
     db.getModalInfo(req.params.id)
-        .then((results) => {
-            console.log("index.js, results after modalInfo:", results);
-            modalInfoAndComments.push(results);
+        .then((modalInfoResults) => {
+            console.log("index.js, results after modalInfo:", modalInfoResults);
+            modalInfoAndComments.push(modalInfoResults);
             console.log(
                 "index.js, modalInfoAndComments after db.getModalInfo ran:",
                 modalInfoAndComments
@@ -115,7 +115,10 @@ app.get("/modal-id/:id", (req, res) => {
 
         // get comments for selected image
         .then((commentResults) => {
-            console.log("index.js, results after getComments:", commentResults);
+            console.log(
+                "index.js, results reversed after getComments:",
+                commentResults.reverse()
+            );
             modalInfoAndComments.push(commentResults);
             console.log(
                 "index.js, modalInfoAndComments after db.getComments ran:",

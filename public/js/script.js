@@ -28,11 +28,17 @@
                         "script.js, axios in Vue component, response.data",
                         response.data
                     );
-                    each.image = response.data;
+                    each.image = response.data[0];
                     console.log(
                         "script.js, each.image after axios in Vue.component:",
                         each.image
                     );
+                    each.comments = response.data[1];
+                    console.log(
+                        "script.js, each.comments after axios in Vue.component:",
+                        each.comments
+                    );
+                    // the above is passed to "data" a few lines below
                 })
                 .catch(function (err) {
                     console.log(
@@ -46,30 +52,11 @@
             // data as a function which returns an object
             return {
                 // returns a "fresh" copy of the data in main Vue
-                // toggle: false,
-                image: {
-                    url: "",
-                    title: "",
-                    description: "",
-                    username: "",
-                    // image[0]: {
-                    //     url: "",
-                    //     title: "",
-                    //     description: "",
-                    //     username: "",
-                    // comments: [],
-                    // newComment: "", // RENAME OR CANCEL!
-                    // commenter: "", // RENAME OR CANCEL!
-                    // op: "", // RENAME OR CANCEL!
-                    // optime: "", // RENAME OR CANCEL!
-                    // poster: "", // RENAME OR CANCEL!
-                    // comment: "", // RENAME OR CANCEL!
-                    // postertime: "", // RENAME OR CANCEL!
-                },
-                // comments: [], // RENAME OR CANCEL!
-                // poster: "", // RENAME OR CANCEL!
-                // comment: "", // RENAME OR CANCEL!
-                // created_at: "", // RENAME OR CANCEL!
+                image: {},
+                comments: [],
+                // username: "",
+                // comment: "",
+                // created_at: ""
             };
         }, // data ends
 

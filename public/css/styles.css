@@ -223,7 +223,7 @@ h2 {
     box-shadow: 8px 6px 30px 0px grey;
 }
 
-#modal-button {
+#props-button {
     color: white;
     background-color: #c62828;
     width: 100px;
@@ -234,21 +234,50 @@ h2 {
     border: none;
     border-radius: 10px;
     /* margin: 20px auto; */
-    margin: 5px 0 0 20px;
+    margin: 5px 0 20px 20px;
     display: block;
     cursor: pointer;
 }
 
-#modal-button:hover {
+#props-button:hover {
     background-color: #a10303;
 }
 
-#modal-button:active {
+#props-button:active {
     transform: translateY(1px);
 }
 
-#modal-button:focus {
+#props-button:focus {
     outline: none;
+}
+
+.props-container {
+}
+
+.props-commenter {
+    font-family: "Baloo Tamma 2", cursive;
+    font-weight: 600;
+    font-size: 16px;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.props-commenter-thin {
+    font-family: "Baloo Tamma 2", cursive;
+    font-weight: 400;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+.icon-props {
+    font-size: 16px;
+    transform: translateY(-2px);
+    padding: 5px 5px 0 3px;
+}
+
+.distance {
+    padding-left: 10px;
 }
 
 .icon-modal {
