@@ -22,12 +22,12 @@
                 <div class="flexbox">
                     
                     <div>
-                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <ion-icon class="icon" name="information-circle-outline"></ion-icon>
                         <input id="title" v-model="title" type="text" maxlength="33" name="title" placeholder= "title">
                     </div>
 
                     <div>
-                        <ion-icon name="create-outline"></ion-icon>
+                        <ion-icon class="icon" name="create-outline"></ion-icon>
                         <input id="description" v-model="description" type="text" name="description" placeholder= "description">
                     </div>
 
@@ -36,12 +36,12 @@
                 <div class="flexbox">
 
                     <div>
-                        <ion-icon name="person-circle-outline"></ion-icon>
+                        <ion-icon class="icon" name="person-circle-outline"></ion-icon>
                         <input id="username" v-model="username" type="text" name="username" placeholder= "username">
                     </div>
                 
                     <div>
-                         <ion-icon name="cloud-upload-outline"></ion-icon>
+                         <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>
                         <input id="inputfile" @change="handleChange" type="file" required name="file" ref="file" accept="image/*" />
                     </div>
 
@@ -55,7 +55,7 @@
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
             <div class="image" v-for="image in images" @click="selectedImage = image.id">
                 <img class="cover" :src="image.url" :alt="image.description" />
-                <figcaption for=image>{{image.title}}</figcaption>
+                <figcaption id="img-title" for=image>{{ image.title }}</figcaption>
             </div>
 
 
@@ -65,8 +65,8 @@
                 v-if="selectedImage"
                 modal-title="show me"
                 :id="selectedImage"
-                @close="closeModal"
-            ></modal-component>
+                @close="closeModal">
+            </modal-component>
 
         </div>
 
@@ -78,11 +78,57 @@
         <!-- "modal-template" = name of template in Vue.component -->
         <script type="text/x-template" id="modal-template">
             <div class="component">
-                <p id="x" @click="closeModal">X</p>
-                <img id="img-modal" :src="image.url" :alt="image.description">
-                <figcaption> Title: {{image.title}}</figcaption>
-                <p>Description: {{image.description}}</p>
-                <p>Uploaded by {{image.username}} on {{image.created_at}}</p>
+                
+                <img id="img-modal" :src="image[0].url" :alt="image[0].description">
+                
+                <div class="comments">
+
+                    <p id="x" @click="closeModal">X</p>
+
+                    <h2>Props</h2>
+
+                    <div>
+                        <ion-icon class="props-icon" name="create-outline"></ion-icon>
+                        <input class="props-input" v-model="comment" type="text" name="comment" placeholder= "props">
+                    </div>
+
+                    <div>
+                        <ion-icon class="props-icon" name="person-circle-outline"></ion-icon>
+                        <input class="props-input" v-model="name" type="text" name="name" placeholder= "username">
+                    </div>
+
+                    <!-- <button id="modal-button" @click="modalButton">submit</button> -->
+
+                    <div>
+                        <p>{{ comment }}</p>
+                        <p>{{ username }} on {{ date }}</p>
+                    </div>
+
+                </div>
+
+                <div id="image-info">
+                    <div class="flexbox-modal">
+                        <ion-icon class="icon-modal" name="information-circle-outline"></ion-icon>
+                        <figcaption class="img-title-modal"><b>Title:</b> {{ image[0].title }}</figcaption>
+                    </div>
+
+                    <div class="flexbox-modal">
+                        <ion-icon class="icon-modal" name="create-outline"></ion-icon>
+                        <p class="img-modal-description"><b>Description:</b> {{ image[0].description }}</p>
+                    </div>
+
+                    <div class="flexbox-modal">
+                        <ion-icon class="icon-modal" name="person-circle-outline"></ion-icon>
+                        <p class="img-modal-username"><b>Uploaded by:</b> {{ image[0].username }}</p>
+                    </div>
+                        
+                    <div class="flexbox-modal">
+                        <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
+                        <p class="img-modal-date"><b>Date:</b> {{ image[0].created_at }}</p>
+                    </div>
+
+                </div>
+
             </div>
         </script>
         <!-- render comments with v-for -->

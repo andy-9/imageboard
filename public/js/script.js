@@ -30,7 +30,7 @@
                     );
                     each.image = response.data;
                     console.log(
-                        "script.js, each.images after axios in Vue.component:",
+                        "script.js, each.image after axios in Vue.component:",
                         each.image
                     );
                 })
@@ -52,7 +52,24 @@
                     title: "",
                     description: "",
                     username: "",
+                    // image[0]: {
+                    //     url: "",
+                    //     title: "",
+                    //     description: "",
+                    //     username: "",
+                    // comments: [],
+                    // newComment: "", // RENAME OR CANCEL!
+                    // commenter: "", // RENAME OR CANCEL!
+                    // op: "", // RENAME OR CANCEL!
+                    // optime: "", // RENAME OR CANCEL!
+                    // poster: "", // RENAME OR CANCEL!
+                    // comment: "", // RENAME OR CANCEL!
+                    // postertime: "", // RENAME OR CANCEL!
                 },
+                // comments: [], // RENAME OR CANCEL!
+                // poster: "", // RENAME OR CANCEL!
+                // comment: "", // RENAME OR CANCEL!
+                // created_at: "", // RENAME OR CANCEL!
             };
         }, // data ends
 

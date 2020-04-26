@@ -96,15 +96,38 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 ////////// GET DATA FOR MODULE //////////
 
 app.get("/modal-id/:id", (req, res) => {
-    console.log("req.params.id", req.params.id);
+    let modalInfoAndComments = [];
+    console.log("index.js, get modal id:", req.params.id);
+
+    // get image info for modal
     db.getModalInfo(req.params.id)
         .then((results) => {
-            console.log("results for modal:", results);
-            res.json(results);
+            console.log("index.js, results after modalInfo:", results);
+            modalInfoAndComments.push(results);
+            console.log(
+                "index.js, modalInfoAndComments after db.getModalInfo ran:",
+                modalInfoAndComments
+            );
+        })
+        .then(() => {
+            return db.getComments(req.params.id);
+        })
+
+        // get comments for selected image
+        .then((commentResults) => {
+            console.log("index.js, results after getComments:", commentResults);
+            modalInfoAndComments.push(commentResults);
+            console.log(
+                "index.js, modalInfoAndComments after db.getComments ran:",
+                modalInfoAndComments
+            );
+            res.json(modalInfoAndComments);
         })
         .catch((err) => {
-            console.log("index.js, catch for getModalInfo:", err);
+            console.log("index.js, catch for getModalInfo & getComments:", err);
         });
 });
+
+////////// GET COMMENTS FOR MODULE //////////
 
 app.listen(8080, () => console.log("index.js: IB server is listening."));

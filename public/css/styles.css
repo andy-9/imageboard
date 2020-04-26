@@ -16,7 +16,8 @@
 }
 
 body {
-    background-image: url(/patterns/white-waves.png);
+    background-image: url(/patterns/so-white.png);
+    /* background-image: url(/patterns/white-waves.png); */
     /* background-image: url(/patterns/old_map_@2X.png); */
     /* background-image: url(/patterns/full-bloom.png); */
     /* background-image: url(/patterns/memphis-colorful.png); */
@@ -27,7 +28,7 @@ body {
 h1 {
     /* letter-spacing: 13px; */
     /* font-family: "Permanent Marker", cursive; */
-    font-family: RuthlessWreckinOne-7YlK;
+    font-family: RuthlessWreckinOne-7YlK, "Baloo Tamma 2", cursive;
     font-size: 70px;
     text-align: center;
     text-shadow: 5px 5px 2px #c62828;
@@ -57,10 +58,13 @@ h1 {
 }
 
 ion-icon {
-    font-size: 32px;
     --ionicon-stroke-width: 32px;
-    transform: translateY(10px);
+}
+
+.icon {
+    font-size: 32px;
     margin-left: 10px;
+    transform: translateY(10px);
 }
 
 input {
@@ -75,19 +79,17 @@ input {
 }
 
 input:hover {
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(246, 246, 246);
 }
 
 input:focus {
     outline: none;
-    background-color: rgb(247, 247, 247);
 }
 
 #title,
 #description,
 #username,
 #inputfile {
-    /* margin-right: 200px; */
     width: 350px;
 }
 
@@ -97,28 +99,21 @@ input:focus {
 }
 
 button {
-    background-color: orange;
     color: white;
+    background-color: #c62828;
     width: 150px;
     height: 50px;
     font-size: 30px;
     text-align: center;
     border: none;
-    /* border: 2px solid grey; */
     border-radius: 25px;
-    /* margin: 20px, auto, 20px, auto; */
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px auto;
     display: block;
     cursor: pointer;
 }
 
 button:hover {
-    /* border: 2px solid black; */
-    /* color: black; */
-    background-color: rgb(230, 150, 2);
+    background-color: #a10303;
 }
 
 button:active {
@@ -145,38 +140,129 @@ img {
     width: 100%;
     height: 88%;
     padding: 1%;
-    object-fit: cover;
+    /* object-fit: cover; */
+    /* object-fit: scale-down; */
+    object-fit: contain;
     overflow: hidden;
     border-radius: 5% 5% 0 0;
 }
 
-figcaption {
-    font-family: SpriteGraffiti-Shadow;
-    /* font-family: "Baloo Tamma 2", cursive; */
+#img-title {
+    font-family: SpriteGraffiti-Shadow, "Baloo Tamma 2", cursive;
     font-size: 24px;
 }
 
 /* ////////////////////////// MODAL ////////////////////////// */
 
 .component {
-    background-image: url(/patterns/so-white.png);
+    /* background-image: url(/patterns/so-white.png); */
+    background: white;
     position: fixed;
-    top: 5%;
-    right: 5%;
-    bottom: 5%;
-    left: 5%;
-    opacity: 0.95;
+    top: 0;
+    bottom: 0;
+    right: 4%;
+    left: 4%;
+    /* opacity: 0.98; */
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 4fr 1fr;
+}
+
+#image-info {
+    margin-left: 70px;
+}
+
+.flexbox-modal {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.img-title-modal {
+    /* width: 100%; */
+    /* height: 100%; */
+    /* padding: 1%; */
+    /* object-fit: contain; */
+    /* object-fit: cover; */
+    object-fit: scale-down;
+}
+
+.comments {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
 }
 
 #x {
-    font-family: "SpriteGraffiti-Shadow";
+    font-family: "SpriteGraffiti-Shadow", "Baloo Tamma 2", cursive;
     cursor: pointer;
     position: absolute;
     top: 5px;
     right: 5px;
 }
 
-#img-modal {
+h2 {
+    font-family: RuthlessWreckinOne-7YlK, "Baloo Tamma 2", cursive;
+    font-size: 60px;
+    color: white;
+    text-shadow: 5px 0px 10px black;
+    margin: 40px 10px 0px 0px;
+}
+
+.props-icon {
+    font-size: 16px;
+}
+
+.props-input {
+    height: 20px;
+    width: 300px;
+    font-size: 15px;
+    background-color: white;
+    padding: 0 5px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    box-shadow: 8px 6px 30px 0px grey;
+}
+
+#modal-button {
+    color: white;
+    background-color: #c62828;
+    width: 100px;
+    height: 20px;
+    font-size: 15px;
+    text-align: center;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    /* margin: 20px auto; */
+    margin: 5px 0 0 20px;
+    display: block;
+    cursor: pointer;
+}
+
+#modal-button:hover {
+    background-color: #a10303;
+}
+
+#modal-button:active {
+    transform: translateY(1px);
+}
+
+#modal-button:focus {
+    outline: none;
+}
+
+.icon-modal {
+    font-size: 24px;
+    margin-left: 30px;
+    padding: 10px;
+    transform: translateY(-10px);
+}
+
+.img-title-modal,
+.img-modal-description,
+.img-modal-username,
+.img-modal-date {
+    font-family: "SpriteGraffiti-Shadow", "Baloo Tamma 2", cursive;
 }
 
 @media screen and (min-width: 320px) and (max-width: 540px) {

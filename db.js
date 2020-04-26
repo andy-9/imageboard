@@ -4,14 +4,14 @@ const db = spicedPg(
         "postgres:postgres:postgres@localhost:5432/imageboard"
 );
 
-// GETS EVERYTHING FROM THE DATABASE
+// GETS EVERYTHING FROM TABLE "IMAGES"
 module.exports.getInfoAndImage = () => {
     return db.query(`SELECT * FROM images`).then((result) => {
         return result.rows;
     });
 };
 
-// INSERT DATA FROM USER INTO DATABASE
+// INSERT DATA FROM USER INTO TABLE "IMAGES"
 module.exports.insertInfoAndImageUrl = (url, username, title, description) => {
     return db.query(
         `INSERT INTO images (url, username, title, description)
@@ -22,15 +22,29 @@ module.exports.insertInfoAndImageUrl = (url, username, title, description) => {
 };
 // RETURNING *;`,
 
-// GETS EVERYTHING FROM THE DATABASE FOR MODAL-ID
+// GETS EVERYTHING FROM TABLE "IMAGES" FOR MODAL-ID
 module.exports.getModalInfo = (id) => {
     return db
         .query(
             `SELECT * FROM images
-        WHERE id=$1`,
+            WHERE id=$1`,
             [id]
         )
         .then((result) => {
             return result.rows[0];
+        });
+};
+
+// GET COMMENTS FROM TABLE "COMMENTS" FOR MODAL-ID
+module.exports.getComments = (image_id) => {
+    return db
+        .query(
+            `SELECT * FROM comments
+            WHERE image_id=$1`,
+            [image_id]
+        )
+        .then((result) => {
+            // console.log("result in db.js in getComments:", result.rows);
+            return result.rows;
         });
 };
