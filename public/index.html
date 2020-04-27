@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <h1>-> Graffiti * Street Art <-</h1>
+        <h1>-> Graffiti & Street Art *</h1>
         
         <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
         <div id="main">
@@ -53,19 +53,25 @@
 
 
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
-            <div class="image" v-for="image in images" @click="selectedImage = image.id">
-                <img class="cover" :src="image.url" :alt="image.description" />
-                <figcaption id="img-title" for=image>{{ image.title }}</figcaption>
+            <div class="image" v-for="image in images" >
+                <a :href="'#' + image.id">
+                    <!-- @click="selectedImage = image.id" -->
+                    <img class="cover" :src="image.url" :alt="image.description" />
+                    <figcaption id="img-title" for=image>{{ image.title }}</figcaption>
+                </a>
             </div>
 
-
             <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
-
+            
             <modal-component
-                v-if="selectedImage"
-                :id="selectedImage"
-                @close="closeModal">
+            v-if="selectedImage"
+            :id="selectedImage"
+            @close="closeModal">
             </modal-component>
+        
+            <!-- ///////// LOAD MORE BUTTON ///////// -->
+            <!-- <button @click="loadMore">more</button> -->
+
 
         </div>
 

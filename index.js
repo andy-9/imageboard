@@ -115,10 +115,10 @@ app.get("/modal-id/:id", (req, res) => {
 
         // get comments for selected image
         .then((commentResults) => {
-            // console.log(
-            //     "index.js, results reversed after getComments:",
-            //     commentResults.reverse()
-            // );
+            console.log(
+                "index.js, results reversed after getComments:",
+                commentResults.reverse()
+            );
             modalInfoAndComments.push(commentResults);
             // console.log(
             //     "index.js, modalInfoAndComments after db.getComments ran:",
@@ -144,10 +144,10 @@ app.post("/comment", (req, res) => {
 
     db.insertCurrentComment(username, comment, image_id)
         .then((currentComment) => {
-            console.log(
-                "index.js, insertCurrentComment RETURNING INSERT data from database:",
-                currentComment
-            );
+            // console.log(
+            //     "index.js, insertCurrentComment RETURNING INSERT data from database:",
+            //     currentComment
+            // );
             userProp = currentComment.rows[0];
             console.log(
                 "index.js POST /comment, response from db.insertCurrentComment, userProp:",

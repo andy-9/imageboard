@@ -12,39 +12,20 @@
         props: ["id"], // array, names camelCase, refers to modal inside main div in index.html
 
         mounted: function () {
-            var each = this;
-            console.log(
-                "script.js, id in mounted in my Vue.component:",
-                each.id
-            ); // refers to modal inside main div in index.html
+            this.modalInfo();
+        },
+        // mounted ends
 
-            // axios-request to the server.js sending the id --> get all the information for that id
-            axios
-                .get("/modal-id/" + each.id)
-                .then(function (response) {
-                    console.log(
-                        "script.js, axios in Vue component, response.data",
-                        response.data
-                    );
-                    each.image = response.data[0];
-                    console.log(
-                        "script.js, each.image after axios in Vue.component:",
-                        each.image
-                    );
-                    each.comments = response.data[1];
-                    console.log(
-                        "script.js, each.comments after axios in Vue.component:",
-                        each.comments
-                    );
-                    // the above is passed to "data" a few lines below
-                })
-                .catch(function (err) {
-                    console.log(
-                        "script.js, catch in axios.get /modal-id/:id in Vue.component:",
-                        err
-                    );
-                });
-        }, // mounted ends
+        watch: {
+            // whenever our image id changes, this function will run. It's keeping an eye on imageId
+            id: function () {
+                // you should do EXACTLY the same thing that you're doing in your mounted function in your component: retrieve NEW image info and comments as well
+                console.log(
+                    "selectedImage changed! this is the watcher reporting."
+                );
+                this.modalInfo();
+            },
+        },
 
         data: function () {
             // data as a function which returns an object
@@ -59,6 +40,42 @@
         }, // data ends
 
         methods: {
+            // get modal infos (image, input fields, id, date)
+            modalInfo: function () {
+                var each = this;
+                console.log(
+                    "script.js, id in mounted in my Vue.component:",
+                    each.id
+                ); // refers to modal inside main div in index.html
+
+                // axios-request to the server.js sending the id --> get all the information for that id
+                axios
+                    .get("/modal-id/" + each.id)
+                    .then(function (response) {
+                        console.log(
+                            "script.js, axios in Vue component, response.data",
+                            response.data
+                        );
+                        each.image = response.data[0];
+                        console.log(
+                            "script.js, each.image after axios in Vue.component:",
+                            each.image
+                        );
+                        each.comments = response.data[1];
+                        console.log(
+                            "script.js, each.comments after axios in Vue.component:",
+                            each.comments
+                        );
+                        // the above is passed to "data" a few lines below
+                    })
+                    .catch(function (err) {
+                        console.log(
+                            "script.js, catch in axios.get /modal-id/:id in Vue.component:",
+                            err
+                        );
+                    });
+            },
+
             // get current comment
             postComment: function (e) {
                 // prevents the page from reloading:
@@ -113,7 +130,6 @@
                 );
                 this.$emit("close");
             },
-            // ANOTHER FUNCTION FOR SUBMITTING COMMENTS, including axios post
         }, // methods end
     });
 
@@ -122,9 +138,11 @@
         el: "#main",
 
         data: {
-            selectedImage: null,
             // seen: true,
+            // selectedImage: null,
             images: [],
+            // make modal pop open automatically when page initially loads, gives us link sharing functionality:
+            selectedImage: location.hash.slice(1),
             title: "",
             description: "",
             username: "",
@@ -152,6 +170,14 @@
                         err
                     );
                 });
+
+            window.addEventListener("hashchange", function () {
+                console.log("hashchange has fired!");
+                console.log(location.hash);
+
+                each.selectedImage = location.hash.slice(1);
+                // console.log("script.js, each:", each);
+            });
         }, // mounted ends
 
         methods: {
@@ -217,6 +243,7 @@
                     "script.js, closeModal is running in methods in main Vue"
                 );
                 this.selectedImage = null;
+                location.hash = "";
             },
         }, // methods end
     });
