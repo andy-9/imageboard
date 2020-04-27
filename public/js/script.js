@@ -17,15 +17,13 @@
         // mounted ends
 
         watch: {
-            // whenever our image id changes, this function will run. It's keeping an eye on imageId
             id: function () {
-                // you should do EXACTLY the same thing that you're doing in your mounted function in your component: retrieve NEW image info and comments as well
                 console.log(
-                    "selectedImage changed! this is the watcher reporting."
+                    "script.js: selectedImage changed, this is the watcher reporting."
                 );
                 this.modalInfo();
             },
-        },
+        }, // watch ends
 
         data: function () {
             // data as a function which returns an object
@@ -56,23 +54,33 @@
                             "script.js, axios in Vue component, response.data",
                             response.data
                         );
-                        each.image = response.data[0];
-                        console.log(
-                            "script.js, each.image after axios in Vue.component:",
-                            each.image
-                        );
-                        each.comments = response.data[1];
-                        console.log(
-                            "script.js, each.comments after axios in Vue.component:",
-                            each.comments
-                        );
+
+                        // close modal when id doesn't exist or is no number
+                        if (
+                            response.data[0] === null ||
+                            response.data === "noNumber"
+                        ) {
+                            each.$emit("close");
+                        } else {
+                            each.image = response.data[0];
+                            console.log(
+                                "script.js, each.image after axios in Vue.component:",
+                                each.image
+                            );
+                            each.comments = response.data[1];
+                            console.log(
+                                "script.js, each.comments after axios in Vue.component:",
+                                each.comments
+                            );
+                        }
                         // the above is passed to "data" a few lines below
                     })
                     .catch(function (err) {
                         console.log(
-                            "script.js, catch in axios.get /modal-id/:id in Vue.component:",
+                            "CATCH in script.js in axios.get /modal-id/:id in Vue.component:",
                             err
                         );
+                        each.$emit("close");
                     });
             },
 
@@ -114,7 +122,7 @@
                     })
                     .catch(function (err) {
                         console.log(
-                            "script.js, catch in axios POST /comment in methods in component Vue:",
+                            "CATCH in script.js in axios POST /comment in methods in component Vue:",
                             err
                         );
                     });
@@ -139,10 +147,10 @@
 
         data: {
             // seen: true,
-            // selectedImage: null,
             images: [],
             // make modal pop open automatically when page initially loads, gives us link sharing functionality:
             selectedImage: location.hash.slice(1),
+            // selectedImage: null,
             title: "",
             description: "",
             username: "",
@@ -166,14 +174,14 @@
                 })
                 .catch(function (err) {
                     console.log(
-                        "script.js, catch in axios.get /images in main Vue:",
+                        "CATCH in script.js in axios.get /images in main Vue:",
                         err
                     );
                 });
 
             window.addEventListener("hashchange", function () {
-                console.log("hashchange has fired!");
-                console.log(location.hash);
+                console.log("script.js, hashchange has fired!");
+                console.log("script.js, location.hash:", location.hash);
 
                 each.selectedImage = location.hash.slice(1);
                 // console.log("script.js, each:", each);
@@ -214,7 +222,7 @@
                     })
                     .catch(function (err) {
                         console.log(
-                            "script.js, catch in axios POST /upload in methods in main Vue:",
+                            "CATCH in script.js in axios POST /upload in methods in main Vue:",
                             err
                         );
                     });

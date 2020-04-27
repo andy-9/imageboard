@@ -55,11 +55,11 @@
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
             <div class="image" v-for="image in images" >
                 <a :href="'#' + image.id">
-                    <!-- @click="selectedImage = image.id" -->
                     <img class="cover" :src="image.url" :alt="image.description" />
                     <figcaption id="img-title" for=image>{{ image.title }}</figcaption>
                 </a>
             </div>
+            <!-- @click="selectedImage = image.id" -->
 
             <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
             

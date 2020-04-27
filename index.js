@@ -46,7 +46,7 @@ app.get("/images", (req, res) => {
             res.json(results.reverse());
         })
         .catch((err) => {
-            console.log("index.js, catch for getInfoAndImage:", err);
+            console.log("CATCH in index.js for getInfoAndImage:", err);
         });
 });
 
@@ -84,7 +84,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                 });
             })
             .catch((err) => {
-                console.log("catch in POST /upload to database", err);
+                console.log("CATCH in POST /upload to database", err);
             });
     } else {
         res.json({
@@ -110,24 +110,28 @@ app.get("/modal-id/:id", (req, res) => {
             // );
         })
         .then(() => {
+            // get comments for selected image
             return db.getComments(req.params.id);
         })
-
-        // get comments for selected image
         .then((commentResults) => {
             console.log(
-                "index.js, results reversed after getComments:",
-                commentResults.reverse()
+                "index.js, results reversed after getComments 1:",
+                commentResults
             );
-            modalInfoAndComments.push(commentResults);
-            // console.log(
-            //     "index.js, modalInfoAndComments after db.getComments ran:",
-            //     modalInfoAndComments
-            // );
+            modalInfoAndComments.push(commentResults.reverse());
+            console.log(
+                "index.js, modalInfoAndComments after db.getComments ran:",
+                modalInfoAndComments
+            );
             res.json(modalInfoAndComments);
         })
         .catch((err) => {
-            console.log("index.js, catch for getModalInfo & getComments:", err);
+            console.log(
+                "CATCH in index.js for getModalInfo & getComments:",
+                err
+            );
+            // close modal when hash is no number:
+            res.json("noNumber");
         });
 });
 
@@ -158,7 +162,7 @@ app.post("/comment", (req, res) => {
             });
         })
         .catch((err) => {
-            console.log("catch in POST /comment to database", err);
+            console.log("CATCH in POST /comment to database", err);
         });
 });
 
