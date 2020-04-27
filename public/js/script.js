@@ -54,9 +54,9 @@
                 // returns a "fresh" copy of the data in main Vue
                 image: {},
                 comments: [],
-                // commenter: "",
-                // comment: "",
-                // created_at: ""
+                username: "",
+                comment: "",
+                created_at: "",
             };
         }, // data ends
 
@@ -74,7 +74,7 @@
                 );
 
                 var commentInfo = {
-                    commenter: this.commenter,
+                    username: this.username,
                     comment: this.comment,
                     image_id: this.id,
                 };
@@ -105,7 +105,7 @@
                     });
                 // clear input fields:
                 this.comment = "";
-                this.commenter = "";
+                this.username = "";
             },
 
             // close modal

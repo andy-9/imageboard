@@ -72,7 +72,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     if (req.file) {
         db.insertInfoAndImageUrl(url, username, title, description)
             .then((response) => {
-                // console.log("RETURNING INSERT data from database:", response);
+                // console.log("index.js, insertInfoAndImageUrl RETURNING INSERT data from database:", response);
                 userInsert = response.rows[0];
                 console.log(
                     "index.js POST /upload, response from db.insertInfoAndImageUrl, userInsert:",
@@ -135,16 +135,19 @@ app.get("/modal-id/:id", (req, res) => {
 app.post("/comment", (req, res) => {
     console.log("index.js POST /comment, req.params:", req.params);
     console.log("index.js POST /comment, req.body:", req.body);
-    commenter = req.body.commenter;
-    console.log("index.js POST /comment, commenter:", commenter);
+    username = req.body.username;
+    console.log("index.js POST /comment, username:", username);
     comment = req.body.comment;
     console.log("index.js POST /comment, comment:", comment);
     image_id = req.body.image_id;
     console.log("index.js POST /comment, image_id:", image_id);
 
-    db.insertCurrentComment(commenter, comment, image_id)
+    db.insertCurrentComment(username, comment, image_id)
         .then((currentComment) => {
-            console.log("RETURNING INSERT data from database:", currentComment);
+            console.log(
+                "index.js, insertCurrentComment RETURNING INSERT data from database:",
+                currentComment
+            );
             userProp = currentComment.rows[0];
             console.log(
                 "index.js POST /comment, response from db.insertCurrentComment, userProp:",

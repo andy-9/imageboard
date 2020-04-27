@@ -95,7 +95,7 @@
 
                         <div>
                             <ion-icon class="props-icon" name="person-circle-outline"></ion-icon>
-                            <input class="props-input" v-model="commenter" type="text" name="commenter" placeholder= "commenter">
+                            <input class="props-input" v-model="username" type="text" name="username" placeholder= "username">
                         </div>
 
                         <button id="props-button" @click="postComment">submit</button>
@@ -106,7 +106,7 @@
                         
                         <div class="flexbox-modal">
                             <ion-icon class="icon-props" name="person-circle-outline"></ion-icon>
-                            <p class="props-commenter-thin">{{ comment.commenter }}</p>
+                            <p class="props-commenter-thin">{{ comment.username }}</p>
                             <ion-icon class="icon-props distance" name="calendar-outline"></ion-icon>
                             <p class="props-commenter-thin">{{ comment.created_at }}</p>
                         </div>
