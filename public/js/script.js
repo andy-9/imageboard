@@ -1,20 +1,18 @@
 // console.log("running");
 
 (function () {
+    Vue.config.ignoredElements = [/^ion-/];
+
     //////////////// VUE COMPONENT ////////////////
     Vue.component("modal-component", {
         // first argument: "modal-component" = name of component
 
         template: "#modal-template", // second argument: object with id/# ("modal-template") in script-tag in index.html
 
-        props: ["modalTitle", "id"], // array, names camelCase, refers to modal inside main div in index.html
+        props: ["id"], // array, names camelCase, refers to modal inside main div in index.html
 
         mounted: function () {
             var each = this;
-            console.log(
-                "script.js, modalTitle in mounted in my Vue.component:",
-                each.modalTitle
-            ); // refers to modal inside main div in index.html
             console.log(
                 "script.js, id in mounted in my Vue.component:",
                 each.id

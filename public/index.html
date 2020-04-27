@@ -23,7 +23,7 @@
                     
                     <div>
                         <ion-icon class="icon" name="information-circle-outline"></ion-icon>
-                        <input id="title" v-model="title" type="text" maxlength="33" name="title" placeholder= "title">
+                        <input id="title" v-model="title" type="text" maxlength="24" name="title" placeholder= "title">
                     </div>
 
                     <div>
@@ -63,7 +63,6 @@
 
             <modal-component
                 v-if="selectedImage"
-                modal-title="show me"
                 :id="selectedImage"
                 @close="closeModal">
             </modal-component>

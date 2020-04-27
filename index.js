@@ -102,12 +102,12 @@ app.get("/modal-id/:id", (req, res) => {
     // get image info for modal
     db.getModalInfo(req.params.id)
         .then((modalInfoResults) => {
-            console.log("index.js, results after modalInfo:", modalInfoResults);
+            // console.log("index.js, results after modalInfo:", modalInfoResults);
             modalInfoAndComments.push(modalInfoResults);
-            console.log(
-                "index.js, modalInfoAndComments after db.getModalInfo ran:",
-                modalInfoAndComments
-            );
+            // console.log(
+            //     "index.js, modalInfoAndComments after db.getModalInfo ran:",
+            //     modalInfoAndComments
+            // );
         })
         .then(() => {
             return db.getComments(req.params.id);
@@ -115,15 +115,15 @@ app.get("/modal-id/:id", (req, res) => {
 
         // get comments for selected image
         .then((commentResults) => {
-            console.log(
-                "index.js, results reversed after getComments:",
-                commentResults.reverse()
-            );
+            // console.log(
+            //     "index.js, results reversed after getComments:",
+            //     commentResults.reverse()
+            // );
             modalInfoAndComments.push(commentResults);
-            console.log(
-                "index.js, modalInfoAndComments after db.getComments ran:",
-                modalInfoAndComments
-            );
+            // console.log(
+            //     "index.js, modalInfoAndComments after db.getComments ran:",
+            //     modalInfoAndComments
+            // );
             res.json(modalInfoAndComments);
         })
         .catch((err) => {
