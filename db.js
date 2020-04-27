@@ -54,7 +54,7 @@ module.exports.insertCurrentComment = (username, comment, image_id) => {
     return db.query(
         `INSERT INTO comments (username, comment, image_id)
         VALUES ($1, $2, $3)
-        RETURNING comment, username;`,
+        RETURNING username, comment, image_id;`,
         [username, comment, image_id]
     );
 };

@@ -54,7 +54,7 @@
                 // returns a "fresh" copy of the data in main Vue
                 image: {},
                 comments: [],
-                // username: "",
+                // commenter: "",
                 // comment: "",
                 // created_at: ""
             };
@@ -65,30 +65,26 @@
             postComment: function (e) {
                 // prevents the page from reloading:
                 e.preventDefault();
-
                 // 'this' allows me to see all the properties of data
+
+                var each = this;
                 console.log(
-                    "script.js, 'this' in methods in component Vue:",
+                    "script.js, 'this' in postComment in component Vue:",
                     this
                 );
 
-                username = this.username;
+                var commentInfo = {
+                    commenter: this.commenter,
+                    comment: this.comment,
+                    image_id: this.id,
+                };
                 console.log(
-                    "script.js, method postComment, username:",
-                    username
+                    "script.js, method postComment, commentInfo:",
+                    commentInfo
                 );
-                comment = this.comment;
-                console.log("script.js, method postComment, comment:", comment);
-                image_id = this.id;
-                console.log(
-                    "script.js, method postComment, image_id:",
-                    image_id
-                );
-
-                var each = this;
 
                 axios
-                    .post("/comment")
+                    .post("/comment", commentInfo)
                     .then(function (response) {
                         console.log(
                             "script.js, POST /comment in axios in methods in component Vue, getComment.data:",
@@ -109,7 +105,7 @@
                     });
                 // clear input fields:
                 this.comment = "";
-                this.username = "";
+                this.commenter = "";
             },
 
             // close modal

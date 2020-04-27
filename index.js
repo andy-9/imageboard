@@ -135,14 +135,14 @@ app.get("/modal-id/:id", (req, res) => {
 app.post("/comment", (req, res) => {
     console.log("index.js POST /comment, req.params:", req.params);
     console.log("index.js POST /comment, req.body:", req.body);
-    username = req.body.username;
-    console.log("index.js POST /comment, username:", username);
+    commenter = req.body.commenter;
+    console.log("index.js POST /comment, commenter:", commenter);
     comment = req.body.comment;
     console.log("index.js POST /comment, comment:", comment);
     image_id = req.body.image_id;
     console.log("index.js POST /comment, image_id:", image_id);
 
-    db.insertCurrentComment(username, comment, image_id)
+    db.insertCurrentComment(commenter, comment, image_id)
         .then((currentComment) => {
             console.log("RETURNING INSERT data from database:", currentComment);
             userProp = currentComment.rows[0];
