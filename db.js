@@ -6,9 +6,39 @@ const db = spicedPg(
 
 // GETS EVERYTHING FROM TABLE "IMAGES"
 module.exports.getInfoAndImage = () => {
-    return db.query(`SELECT * FROM images`).then((result) => {
-        return result.rows;
-    });
+    return db
+        .query(
+            `SELECT *
+            FROM images
+            ORDER BY id DESC
+            LIMIT 3;`
+        )
+        .then((result) => {
+            return result.rows;
+        });
+};
+
+// LOAD MORE IMAGES WHEN BUTTON IS CLICKED
+exports.getMoreImages = (lastId) => {
+    return db
+        .query(
+            `SELECT *, (
+                SELECT id FROM images
+                ORDER BY id ASC
+                LIMIT 1)
+            AS lowest_id FROM images
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 3;`,
+            [lastId]
+        )
+        .then((moreImages) => {
+            // console.log(
+            //     "db.js, moreImages.rows in getMoreImages:",
+            //     moreImages.rows
+            // );
+            return moreImages.rows;
+        });
 };
 
 // INSERT DATA FROM USER INTO TABLE "IMAGES"

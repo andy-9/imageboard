@@ -53,13 +53,14 @@
 
 
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
-            <div class="image" v-for="image in images" >
+            <div class="image" v-for="image in images" v-if="images.length" >
                 <a :href="'#' + image.id">
                     <img class="cover" :src="image.url" :alt="image.description" />
                     <figcaption id="img-title" for=image>{{ image.title }}</figcaption>
                 </a>
             </div>
             <!-- @click="selectedImage = image.id" -->
+            <button id="more-button" v-if="moreImages" @click="loadMoreButton">more</button>
 
             <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
             
@@ -69,10 +70,6 @@
             @close="closeModal">
             </modal-component>
         
-            <!-- ///////// LOAD MORE BUTTON ///////// -->
-            <!-- <button @click="loadMore">more</button> -->
-
-
         </div>
 
 

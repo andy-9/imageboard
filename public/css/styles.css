@@ -48,8 +48,8 @@ h1 {
 /* ////////////////////////// INPUTFIELDS ////////////////////////// */
 
 #inputfields {
+    /* opacity: 0.6; */
     background-color: white;
-    opacity: 0.6;
     grid-column: 1 / 4;
     height: 210px;
     width: 100%;
@@ -122,6 +122,10 @@ button:active {
 
 button:focus {
     outline: none;
+}
+
+#more-button {
+    grid-column: 2 / 3;
 }
 
 /* ////////////////////////// IMAGES ////////////////////////// */

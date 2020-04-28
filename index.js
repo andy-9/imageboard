@@ -42,11 +42,29 @@ const uploader = multer({
 app.get("/images", (req, res) => {
     db.getInfoAndImage()
         .then((results) => {
-            // console.log("results to bring on site:", results);
-            res.json(results.reverse());
+            // console.log(
+            //     "index.js, results to bring on site for getInfoAndImage:",
+            //     results
+            // );
+            // resrev = results.reverse();
+            res.json(results);
         })
         .catch((err) => {
             console.log("CATCH in index.js for getInfoAndImage:", err);
+        });
+});
+
+////////// GET MORE DATA FOR SITE //////////
+app.post("/load-more", (req, res) => {
+    // console.log("lastId:", lastId);
+    // console.log("req.body.lastId:", req.body.lastId);
+    db.getMoreImages(req.body.lastId)
+        .then((moreImages) => {
+            // console.log("index.js, moreImages in POST /load-more:", moreImages);
+            res.json(moreImages);
+        })
+        .catch((err) => {
+            console.log("CATCH in index.js /load-more:", err);
         });
 });
 

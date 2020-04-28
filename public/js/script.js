@@ -155,22 +155,24 @@
             description: "",
             username: "",
             file: null,
+            moreImages: true,
         }, // data ends
 
         mounted: function () {
             console.log("script.js, my main Vue has mounted!");
 
             var each = this;
-            console.log("script.js, each before axios in main Vue:", each);
+            // console.log("script.js, each before axios in main Vue:", each);
 
             axios
                 .get("/images")
                 .then(function (response) {
+                    // each.images = response.data.reverse();
                     each.images = response.data;
-                    console.log(
-                        "script.js, each.images after axios in main Vue:",
-                        each.images
-                    );
+                    // console.log(
+                    //     "script.js, each.images after axios in main Vue:",
+                    //     each.images
+                    // );
                 })
                 .catch(function (err) {
                     console.log(
@@ -244,6 +246,60 @@
                     e.target.files[0]
                 );
                 this.file = e.target.files[0];
+            },
+
+            loadMoreButton: function (e) {
+                console.log(
+                    "script.js, loadMoreButton is running in methods in main Vue"
+                );
+                e.preventDefault();
+                var each = this;
+                // console.log(
+                //     "script.js in methods in main Vue loadMoreButton, number of images loaded:",
+                //     this.images.length
+                // );
+                // console.log(
+                //     "script.js in methods in main Vue loadMoreButton, access last image loaded:",
+                //     this.images[this.images.length - 1]
+                // );
+                // console.log(
+                //     "script.js in methods in main Vue loadMoreButton, access id of last image loaded:",
+                //     this.images[this.images.length - 1].id
+                // );
+                var lastId = {
+                    lastId: this.images[this.images.length - 1].id,
+                };
+                axios
+                    .post("/load-more", lastId)
+                    .then(function (response) {
+                        // console.log(
+                        //     "script.js, POST /load-more in axios in methods in main Vue, response.data:",
+                        //     response.data
+                        // );
+
+                        var lastId = response.data[response.data.length - 1].id;
+                        // console.log(
+                        //     "script.js in axios loadMoreButton, lastId:",
+                        //     lastId
+                        // );
+                        var lowestId =
+                            response.data[response.data.length - 1].lowest_id;
+                        // console.log(
+                        //     "script.js in axios loadMoreButton, lowestId:",
+                        //     lowestId
+                        // );
+                        if (lastId == lowestId) {
+                            each.moreImages = false;
+                        }
+
+                        each.images.push(...response.data);
+                    })
+                    .catch(function (err) {
+                        console.log(
+                            "CATCH in script.js in axios POST /load-more in methods in main Vue:",
+                            err
+                        );
+                    });
             },
 
             closeModal: function () {
