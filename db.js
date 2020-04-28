@@ -11,7 +11,7 @@ module.exports.getInfoAndImage = () => {
             `SELECT *
             FROM images
             ORDER BY id DESC
-            LIMIT 3;`
+            LIMIT 9;`
         )
         .then((result) => {
             return result.rows;
@@ -29,7 +29,7 @@ exports.getMoreImages = (lastId) => {
             AS lowest_id FROM images
             WHERE id < $1
             ORDER BY id DESC
-            LIMIT 3;`,
+            LIMIT 9;`,
             [lastId]
         )
         .then((moreImages) => {

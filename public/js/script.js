@@ -18,9 +18,7 @@
 
         watch: {
             id: function () {
-                console.log(
-                    "script.js: selectedImage changed, this is the watcher reporting."
-                );
+                console.log("WATCHER in script.js: selectedImage changed!");
                 this.modalInfo();
             },
         }, // watch ends
@@ -34,6 +32,8 @@
                 username: "",
                 comment: "",
                 created_at: "",
+                left_id: "",
+                right_id: "",
             };
         }, // data ends
 
@@ -41,19 +41,19 @@
             // get modal infos (image, input fields, id, date)
             modalInfo: function () {
                 var each = this;
-                console.log(
-                    "script.js, id in mounted in my Vue.component:",
-                    each.id
-                ); // refers to modal inside main div in index.html
+                // console.log(
+                //     "script.js, id in mounted in my Vue.component:",
+                //     each.id
+                // ); // refers to modal inside main div in index.html
 
                 // axios-request to the server.js sending the id --> get all the information for that id
                 axios
                     .get("/modal-id/" + each.id)
                     .then(function (response) {
-                        console.log(
-                            "script.js, axios in Vue component, response.data",
-                            response.data
-                        );
+                        // console.log(
+                        //     "script.js, axios in Vue component, response.data",
+                        //     response.data
+                        // );
 
                         // close modal when id doesn't exist or is no number
                         if (
@@ -63,15 +63,15 @@
                             each.$emit("close");
                         } else {
                             each.image = response.data[0];
-                            console.log(
-                                "script.js, each.image after axios in Vue.component:",
-                                each.image
-                            );
+                            // console.log(
+                            //     "script.js, each.image after axios in Vue.component:",
+                            //     each.image
+                            // );
                             each.comments = response.data[1];
-                            console.log(
-                                "script.js, each.comments after axios in Vue.component:",
-                                each.comments
-                            );
+                            // console.log(
+                            //     "script.js, each.comments after axios in Vue.component:",
+                            //     each.comments
+                            // );
                         }
                         // the above is passed to "data" a few lines below
                     })
@@ -91,32 +91,32 @@
                 // 'this' allows me to see all the properties of data
 
                 var each = this;
-                console.log(
-                    "script.js, 'this' in postComment in component Vue:",
-                    this
-                );
+                // console.log(
+                //     "script.js, 'this' in postComment in component Vue:",
+                //     this
+                // );
 
                 var commentInfo = {
                     username: this.username,
                     comment: this.comment,
                     image_id: this.id,
                 };
-                console.log(
-                    "script.js, method postComment, commentInfo:",
-                    commentInfo
-                );
+                // console.log(
+                //     "script.js, method postComment, commentInfo:",
+                //     commentInfo
+                // );
 
                 axios
                     .post("/comment", commentInfo)
                     .then(function (response) {
-                        console.log(
-                            "script.js, POST /comment in axios in methods in component Vue, getComment.data:",
-                            response.data
-                        );
-                        console.log(
-                            "script.js, POST /comment in axios in methods in component Vue, resp.data.userProp:",
-                            response.data.userProp
-                        );
+                        // console.log(
+                        //     "script.js, POST /comment in axios in methods in component Vue, getComment.data:",
+                        //     response.data
+                        // );
+                        // console.log(
+                        //     "script.js, POST /comment in axios in methods in component Vue, resp.data.userProp:",
+                        //     response.data.userProp
+                        // );
                         // data from index.js added to index 0 in data in this file:
                         each.comments.unshift(response.data.userProp);
                     })
@@ -196,7 +196,7 @@
                 e.preventDefault();
 
                 // 'this' allows me to see all the properties of data
-                console.log("script.js, 'this' in methods in main Vue:", this);
+                // console.log("script.js, 'this' in methods in main Vue:", this);
 
                 // we NEED to use FormData to send a file to the server
                 var formData = new FormData();
@@ -211,14 +211,14 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        console.log(
-                            "script.js, POST /upload in axios in methods in main Vue, resp:",
-                            resp
-                        );
-                        console.log(
-                            "script.js, POST /upload in axios in methods in main Vue, resp.data.userInsert:",
-                            resp.data.userInsert
-                        );
+                        // console.log(
+                        //     "script.js, POST /upload in axios in methods in main Vue, resp:",
+                        //     resp
+                        // );
+                        // console.log(
+                        //     "script.js, POST /upload in axios in methods in main Vue, resp.data.userInsert:",
+                        //     resp.data.userInsert
+                        // );
                         // data from index.js added to index 0 in data in this file:
                         each.images.unshift(resp.data.userInsert);
                     })
@@ -241,10 +241,10 @@
                 console.log(
                     "script.js, handleChange is running in methods in main Vue"
                 );
-                console.log(
-                    "script.js, file in handleChange in methods in main Vue:",
-                    e.target.files[0]
-                );
+                // console.log(
+                //     "script.js, file in handleChange in methods in main Vue:",
+                //     e.target.files[0]
+                // );
                 this.file = e.target.files[0];
             },
 
@@ -288,7 +288,7 @@
                         //     "script.js in axios loadMoreButton, lowestId:",
                         //     lowestId
                         // );
-                        if (lastId == lowestId) {
+                        if (lastId == lowestId || response.data.length < 9) {
                             each.moreImages = false;
                         }
 
