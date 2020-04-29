@@ -95,6 +95,7 @@ module.exports.deleteImage = (id) => {
         `DELETE FROM images
         WHERE images.id =
         (SELECT image_id
-        FROM comments);`
+        FROM comments
+        WHERE comments.image_id = 1);`
     );
 };
