@@ -92,10 +92,10 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             .then((response) => {
                 // console.log("index.js, insertInfoAndImageUrl RETURNING INSERT data from database:", response);
                 userInsert = response.rows[0];
-                console.log(
-                    "index.js POST /upload, response from db.insertInfoAndImageUrl, userInsert:",
-                    userInsert
-                );
+                // console.log(
+                //     "index.js POST /upload, response from db.insertInfoAndImageUrl, userInsert:",
+                //     userInsert
+                // );
                 res.json({
                     userInsert,
                     // success: true,
@@ -189,15 +189,13 @@ app.post("/comment", (req, res) => {
 app.post("/delete", (req, res) => {
     console.log("index.js, req.body.id in post /delete:", req.body.id);
     let id = req.body.id;
-
     // Promise.all([db.deleteImage(id), db.deleteComments(id)])
-
     db.deleteImage(id)
         .then(db.deleteComments(id))
         .then((results) => {
-            console.log(
-                "results in index.js for deleteImage and deleteComments:",
-                results
+            // console.log(
+            //     "results in index.js for deleteImage and deleteComments:",
+            //     results
             );
             res.json(results);
         })

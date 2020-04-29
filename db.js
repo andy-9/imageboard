@@ -89,6 +89,22 @@ module.exports.insertCurrentComment = (username, comment, image_id) => {
     );
 };
 
+module.exports.deleteImage = (id) => {
+    return db.query(
+        `DELETE FROM images
+        WHERE images.id = $1`,
+        [id]
+    );
+};
+
+module.exports.deleteComments = (id) => {
+    return db.query(
+        `DELETE FROM comments
+        WHERE comments.image_id = $1`,
+        [id]
+    );
+};
+
 // DELETE IMAGE & COMMENTS
 // module.exports.deleteImage = (id) => {
 //     return db.query(
@@ -118,19 +134,3 @@ module.exports.insertCurrentComment = (username, comment, image_id) => {
 //         USING comments
 //         WHERE images.id = comments.image_id;`);
 // };
-
-module.exports.deleteImage = (id) => {
-    return db.query(
-        `DELETE FROM images
-        WHERE images.id = $1`,
-        [id]
-    );
-};
-
-module.exports.deleteComments = (id) => {
-    return db.query(
-        `DELETE FROM comments
-        WHERE comments.image_id = $1`,
-        [id]
-    );
-};

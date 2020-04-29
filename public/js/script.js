@@ -249,7 +249,7 @@
                 // loop through all images, check which id matches with deleted id. when match -> remove the image from that place
                 for (var i = 0; i < this.images.length; i++) {
                     if (this.images[i].id == e) {
-                        // remove 1 element from that index
+                        // remove 1 element from that index:
                         this.images.splice(i, 1);
                         break;
                     }
