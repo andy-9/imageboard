@@ -184,4 +184,19 @@ app.post("/comment", (req, res) => {
         });
 });
 
+////////// DELETE IMAGE & COMMENTS //////////
+
+app.get("/delete", (req, res) => {
+    // id = req.body.id;
+    console.log("req.params:", req.params);
+    // console.log("id in index.js /delete:", id);
+    db.deleteImage(id)
+        .then((results) => {
+            console.log("results in index.js for deleteImage:", results);
+        })
+        .catch((err) => {
+            console.log("CATCH in index.js for deleteImage:", err);
+        });
+});
+
 app.listen(8080, () => console.log("index.js: IB server is listening."));

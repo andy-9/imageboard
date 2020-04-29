@@ -1,5 +1,3 @@
-// console.log("running");
-
 (function () {
     Vue.config.ignoredElements = [/^ion-/];
 
@@ -40,21 +38,12 @@
         methods: {
             // get modal infos (image, input fields, id, date)
             modalInfo: function () {
-                var each = this;
-                // console.log(
-                //     "script.js, id in mounted in my Vue.component:",
-                //     each.id
-                // ); // refers to modal inside main div in index.html
+                var each = this; // refers to modal inside main div in index.html
 
                 // axios-request to the server.js sending the id --> get all the information for that id
                 axios
                     .get("/modal-id/" + each.id)
                     .then(function (response) {
-                        // console.log(
-                        //     "script.js, axios in Vue component, response.data",
-                        //     response.data
-                        // );
-
                         // close modal when id doesn't exist or is no number
                         if (
                             response.data[0] === null ||
@@ -63,15 +52,7 @@
                             each.$emit("close");
                         } else {
                             each.image = response.data[0];
-                            // console.log(
-                            //     "script.js, each.image after axios in Vue.component:",
-                            //     each.image
-                            // );
                             each.comments = response.data[1];
-                            // console.log(
-                            //     "script.js, each.comments after axios in Vue.component:",
-                            //     each.comments
-                            // );
                         }
                         // the above is passed to "data" a few lines below
                     })
@@ -89,34 +70,16 @@
                 // prevents the page from reloading:
                 e.preventDefault();
                 // 'this' allows me to see all the properties of data
-
                 var each = this;
-                // console.log(
-                //     "script.js, 'this' in postComment in component Vue:",
-                //     this
-                // );
-
                 var commentInfo = {
                     username: this.username,
                     comment: this.comment,
                     image_id: this.id,
                 };
-                // console.log(
-                //     "script.js, method postComment, commentInfo:",
-                //     commentInfo
-                // );
 
                 axios
                     .post("/comment", commentInfo)
                     .then(function (response) {
-                        // console.log(
-                        //     "script.js, POST /comment in axios in methods in component Vue, getComment.data:",
-                        //     response.data
-                        // );
-                        // console.log(
-                        //     "script.js, POST /comment in axios in methods in component Vue, resp.data.userProp:",
-                        //     response.data.userProp
-                        // );
                         // data from index.js added to index 0 in data in this file:
                         each.comments.unshift(response.data.userProp);
                     })
@@ -138,6 +101,14 @@
                 );
                 this.$emit("close");
             },
+
+            // delete image
+            deleteImage: function () {
+                console.log(
+                    "script.js, deleteImage is running in methods in Vue.component"
+                );
+                this.$emit("delete");
+            },
         }, // methods end
     });
 
@@ -146,7 +117,6 @@
         el: "#main",
 
         data: {
-            // seen: true,
             images: [],
             // make modal pop open automatically when page initially loads, gives us link sharing functionality:
             selectedImage: location.hash.slice(1),
@@ -160,19 +130,13 @@
 
         mounted: function () {
             console.log("script.js, my main Vue has mounted!");
-
             var each = this;
-            // console.log("script.js, each before axios in main Vue:", each);
 
             axios
                 .get("/images")
                 .then(function (response) {
                     // each.images = response.data.reverse();
                     each.images = response.data;
-                    // console.log(
-                    //     "script.js, each.images after axios in main Vue:",
-                    //     each.images
-                    // );
                 })
                 .catch(function (err) {
                     console.log(
@@ -184,9 +148,7 @@
             window.addEventListener("hashchange", function () {
                 console.log("script.js, hashchange has fired!");
                 console.log("script.js, location.hash:", location.hash);
-
                 each.selectedImage = location.hash.slice(1);
-                // console.log("script.js, each:", each);
             });
         }, // mounted ends
 
@@ -194,10 +156,7 @@
             uploadButtonClick: function (e) {
                 // prevents the page from reloading:
                 e.preventDefault();
-
                 // 'this' allows me to see all the properties of data
-                // console.log("script.js, 'this' in methods in main Vue:", this);
-
                 // we NEED to use FormData to send a file to the server
                 var formData = new FormData();
                 // append() is a method in FormData to add properties in ("key", value)-pairs
@@ -211,14 +170,6 @@
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        // console.log(
-                        //     "script.js, POST /upload in axios in methods in main Vue, resp:",
-                        //     resp
-                        // );
-                        // console.log(
-                        //     "script.js, POST /upload in axios in methods in main Vue, resp.data.userInsert:",
-                        //     resp.data.userInsert
-                        // );
                         // data from index.js added to index 0 in data in this file:
                         each.images.unshift(resp.data.userInsert);
                     })
@@ -228,7 +179,6 @@
                             err
                         );
                     });
-                // this is how we send information from front to back
                 // clear input fields:
                 this.title = "";
                 this.description = "";
@@ -254,40 +204,15 @@
                 );
                 e.preventDefault();
                 var each = this;
-                // console.log(
-                //     "script.js in methods in main Vue loadMoreButton, number of images loaded:",
-                //     this.images.length
-                // );
-                // console.log(
-                //     "script.js in methods in main Vue loadMoreButton, access last image loaded:",
-                //     this.images[this.images.length - 1]
-                // );
-                // console.log(
-                //     "script.js in methods in main Vue loadMoreButton, access id of last image loaded:",
-                //     this.images[this.images.length - 1].id
-                // );
                 var lastId = {
                     lastId: this.images[this.images.length - 1].id,
                 };
                 axios
                     .post("/load-more", lastId)
                     .then(function (response) {
-                        // console.log(
-                        //     "script.js, POST /load-more in axios in methods in main Vue, response.data:",
-                        //     response.data
-                        // );
-
                         var lastId = response.data[response.data.length - 1].id;
-                        // console.log(
-                        //     "script.js in axios loadMoreButton, lastId:",
-                        //     lastId
-                        // );
                         var lowestId =
                             response.data[response.data.length - 1].lowest_id;
-                        // console.log(
-                        //     "script.js in axios loadMoreButton, lowestId:",
-                        //     lowestId
-                        // );
                         if (lastId == lowestId || response.data.length < 9) {
                             each.moreImages = false;
                         }
@@ -308,6 +233,31 @@
                 );
                 this.selectedImage = null;
                 location.hash = "";
+            },
+
+            deleteImage: function () {
+                var each = this;
+                var id = {
+                    id: this.id,
+                };
+                console.log("this.images:", this.images);
+                console.log("id in deleteImage:", id);
+                console.log("this.id:", this.id);
+                console.log("req.params:", req.params);
+                console.log("req.query:", req.query);
+                console.log("req.body:", req.body);
+
+                axios
+                    .get("/delete", id)
+                    .then(function () {
+                        closeModal();
+                    })
+                    .catch(function (err) {
+                        console.log(
+                            "CATCH in script.js in axios POST /delete in methods in component Vue:",
+                            err
+                        );
+                    });
             },
         }, // methods end
     });

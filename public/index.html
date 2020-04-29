@@ -23,7 +23,7 @@
                     
                     <div>
                         <ion-icon class="icon" name="information-circle-outline"></ion-icon>
-                        <input id="title" v-model="title" type="text" maxlength="24" name="title" placeholder= "title">
+                        <input id="title" v-model="title" type="text" required maxlength="24" name="title" placeholder= "title">
                     </div>
 
                     <div>
@@ -70,7 +70,9 @@
             <modal-component
             v-if="selectedImage"
             :id="selectedImage"
-            @close="closeModal">
+            @close="closeModal"
+            @delete="deleteImage"
+            >
             </modal-component>
         
         </div>
@@ -107,7 +109,10 @@
                             <input class="props-input" v-model="username" type="text" maxlength="24" name="username" placeholder= "username">
                         </div>
 
-                        <button id="props-button" @click="postComment">submit</button>
+                        <div class="flex-button">
+                            <button id="props-button" @click="postComment">submit</button>
+                            <button id="delete-button" @click="deleteImage">delete</button>
+                        </div>
                     </div>
 
                     <div class="props-container" v-for="comment in comments" v-if="comments.length">

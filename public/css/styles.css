@@ -277,7 +277,13 @@ h2 {
     box-shadow: 8px 6px 30px 0px grey;
 }
 
-#props-button {
+.flex-button {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#props-button,
+#delete-button {
     color: white;
     background-color: #c62828;
     width: 100px;
@@ -293,15 +299,18 @@ h2 {
     cursor: pointer;
 }
 
-#props-button:hover {
+#props-button:hover,
+#delete-button:hover {
     background-color: #a10303;
 }
 
-#props-button:active {
+#props-button:active,
+#delete-button:active {
     transform: translateY(1px);
 }
 
-#props-button:focus {
+#props-button:focus,
+#delete-button:focus {
     outline: none;
 }
 

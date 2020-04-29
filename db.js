@@ -70,7 +70,7 @@ module.exports.getComments = (image_id) => {
     return db
         .query(
             `SELECT * FROM comments
-        WHERE image_id=$1`,
+            WHERE image_id=$1`,
             [image_id]
         )
         .then((result) => {
@@ -86,5 +86,15 @@ module.exports.insertCurrentComment = (username, comment, image_id) => {
         VALUES ($1, $2, $3)
         RETURNING *;`,
         [username, comment, image_id]
+    );
+};
+
+// DELETE IMAGE & COMMENTS
+module.exports.deleteImage = (id) => {
+    return db.query(
+        `DELETE FROM images
+        WHERE images.id =
+        (SELECT image_id
+        FROM comments);`
     );
 };
