@@ -30,8 +30,8 @@
                 username: "",
                 comment: "",
                 created_at: "",
-                left_id: "",
-                right_id: "",
+                // leftleft_id: "",
+                // right_id: "",
             };
         }, // data ends
 
@@ -103,11 +103,20 @@
             },
 
             // delete image
-            deleteImage: function () {
+            deleteImage: function (e) {
+                e.preventDefault();
                 console.log(
                     "script.js, deleteImage is running in methods in Vue.component"
                 );
-                this.$emit("delete");
+                console.log(
+                    "script.js, this.id in deleteImage in Vue component:",
+                    this.id
+                );
+                axios.post("/delete", { id: this.id }).then((response) => {
+                    console.log("deleted", response.data);
+                });
+                this.$emit("close");
+                this.$emit("delete", this.id);
             },
         }, // methods end
     });
@@ -235,29 +244,16 @@
                 location.hash = "";
             },
 
-            deleteImage: function () {
-                var each = this;
-                var id = {
-                    id: this.id,
-                };
-                console.log("this.images:", this.images);
-                console.log("id in deleteImage:", id);
-                console.log("this.id:", this.id);
-                console.log("req.params:", req.params);
-                console.log("req.query:", req.query);
-                console.log("req.body:", req.body);
-
-                axios
-                    .get("/delete", id)
-                    .then(function () {
-                        closeModal();
-                    })
-                    .catch(function (err) {
-                        console.log(
-                            "CATCH in script.js in axios POST /delete in methods in component Vue:",
-                            err
-                        );
-                    });
+            deleteImage: function (e) {
+                console.log("script.js, this in deleteImage:", e);
+                // loop through all images, check which id matches with deleted id. when match -> remove the image from that place
+                for (var i = 0; i < this.images.length; i++) {
+                    if (this.images[i].id == e) {
+                        // remove 1 element from that index
+                        this.images.splice(i, 1);
+                        break;
+                    }
+                }
             },
         }, // methods end
     });
