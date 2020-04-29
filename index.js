@@ -189,15 +189,23 @@ app.post("/comment", (req, res) => {
 app.post("/delete", (req, res) => {
     console.log("index.js, req.body.id in post /delete:", req.body.id);
     let id = req.body.id;
+
+    // Promise.all([db.deleteImage(id), db.deleteComments(id)])
+
     db.deleteImage(id)
+        .then(db.deleteComments(id))
         .then((results) => {
-            console.log("results in index.js for deleteImage:", results);
-        })
-        .then((results) => {
+            console.log(
+                "results in index.js for deleteImage and deleteComments:",
+                results
+            );
             res.json(results);
         })
         .catch((err) => {
-            console.log("CATCH in index.js for deleteImage:", err);
+            console.log(
+                "CATCH in index.js for deleteImage and deleteComments:",
+                err
+            );
         });
 });
 

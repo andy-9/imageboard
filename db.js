@@ -126,3 +126,11 @@ module.exports.deleteImage = (id) => {
         [id]
     );
 };
+
+module.exports.deleteComments = (id) => {
+    return db.query(
+        `DELETE FROM comments
+        WHERE comments.image_id = $1`,
+        [id]
+    );
+};
