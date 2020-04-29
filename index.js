@@ -192,7 +192,10 @@ app.post("/delete", (req, res) => {
     db.deleteImage(id)
         .then((results) => {
             console.log("results in index.js for deleteImage:", results);
-        }) // do I need another .then res.json here?
+        })
+        .then((results) => {
+            res.json(results);
+        })
         .catch((err) => {
             console.log("CATCH in index.js for deleteImage:", err);
         });

@@ -90,12 +90,39 @@ module.exports.insertCurrentComment = (username, comment, image_id) => {
 };
 
 // DELETE IMAGE & COMMENTS
+// module.exports.deleteImage = (id) => {
+//     return db.query(
+//         `DELETE FROM images
+//         WHERE images.id
+//             (SELECT image_id
+//             FROM comments
+//             WHERE comments.image_id) = $1;`,
+//         [id]
+//     );
+// };
+
+// module.exports.deleteImage = (id) => {
+//     return db.query(
+//         `DELETE images, comments
+//         FROM images
+//         INNER JOIN comments
+//         ON comments.image_id = images.id
+//         WHERE images.id = $1`,
+//         [id]
+//     );
+// };
+
+// module.exports.deleteImage = (id) => {
+//     return db.query(`
+//         DELETE FROM images
+//         USING comments
+//         WHERE images.id = comments.image_id;`);
+// };
+
 module.exports.deleteImage = (id) => {
     return db.query(
         `DELETE FROM images
-        WHERE images.id =
-        (SELECT image_id
-        FROM comments
-        WHERE comments.image_id = 1);`
+        WHERE images.id = $1`,
+        [id]
     );
 };
