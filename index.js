@@ -7,6 +7,22 @@ const config = require("./config");
 app.use(express.static("public"));
 app.use(express.json());
 
+const truncateDate = (posttime) => {
+    return (posttime = new Intl.DateTimeFormat("en-GB", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+        // the following makes no sense, but it is what it is
+        // took quite some rounds of testing
+        timeZone: "Etc/GMT",
+    }).format(posttime));
+};
+
 ////////////////// IMAGE UPLOAD BOILERPLATE //////////////////
 
 // multer saves files to our hard drive:
@@ -121,6 +137,9 @@ app.get("/modal-id/:id", (req, res) => {
     db.getModalInfo(req.params.id)
         .then((modalInfoResults) => {
             // console.log("index.js, results after modalInfo:", modalInfoResults);
+            modalInfoResults.created_at = truncateDate(
+                modalInfoResults.created_at
+            );
             modalInfoAndComments.push(modalInfoResults);
             // console.log(
             //     "index.js, modalInfoAndComments after db.getModalInfo ran:",
@@ -190,13 +209,13 @@ app.post("/delete", (req, res) => {
     console.log("index.js, req.body.id in post /delete:", req.body.id);
     let id = req.body.id;
     // Promise.all([db.deleteImage(id), db.deleteComments(id)])
-    db.deleteImage(id)
-        .then(db.deleteComments(id))
+    db.deleteComments(id)
+        .then(db.deleteImage(id))
         .then((results) => {
             // console.log(
             //     "results in index.js for deleteImage and deleteComments:",
             //     results
-            );
+            // );
             res.json(results);
         })
         .catch((err) => {

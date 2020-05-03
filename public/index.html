@@ -3,80 +3,133 @@
     <head>
         <title>Imageboard</title>
         <link rel="stylesheet" href="/css/styles.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600&display=swap" rel="stylesheet">
-        <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule=""
+            src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"
+        ></script>
     </head>
 
     <body>
         <h1>-> Graffiti & Street Art *</h1>
-        
+
         <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
         <div id="main">
-
             <!-- ///////// INPUT FIELDS ///////// -->
 
             <form id="inputfields" action="">
-                
                 <div class="flexbox">
-                    
                     <div>
-                        <ion-icon class="icon" name="information-circle-outline"></ion-icon>
-                        <input id="title" v-model="title" type="text" required maxlength="24" name="title" placeholder= "title">
+                        <ion-icon
+                            class="icon"
+                            name="information-circle-outline"
+                        ></ion-icon>
+                        <input
+                            id="title"
+                            v-model="title"
+                            type="text"
+                            required
+                            maxlength="24"
+                            name="title"
+                            placeholder="title"
+                        />
                     </div>
 
                     <div>
                         <ion-icon class="icon" name="create-outline"></ion-icon>
-                        <input id="description" v-model="description" type="text" maxlength="40" name="description" placeholder= "description">
+                        <input
+                            id="description"
+                            v-model="description"
+                            type="text"
+                            maxlength="40"
+                            name="description"
+                            placeholder="description"
+                        />
                     </div>
-
                 </div>
-                
+
                 <div class="flexbox">
+                    <div>
+                        <ion-icon
+                            class="icon"
+                            name="person-circle-outline"
+                        ></ion-icon>
+                        <input
+                            id="username"
+                            v-model="username"
+                            type="text"
+                            maxlength="24"
+                            name="username"
+                            placeholder="username"
+                        />
+                    </div>
 
                     <div>
-                        <ion-icon class="icon" name="person-circle-outline"></ion-icon>
-                        <input id="username" v-model="username" type="text" maxlength="24" name="username" placeholder= "username">
+                        <ion-icon
+                            class="icon"
+                            name="cloud-upload-outline"
+                        ></ion-icon>
+                        <input
+                            id="inputfile"
+                            @change="handleChange"
+                            type="file"
+                            required
+                            name="file"
+                            ref="file"
+                            accept="image/*"
+                        />
                     </div>
-                
-                    <div>
-                         <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>
-                        <input id="inputfile" @change="handleChange" type="file" required name="file" ref="file" accept="image/*" />
-                    </div>
-
                 </div>
 
                 <button @click="uploadButtonClick">upload</button>
-
             </form>
 
-
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
-            <div class="image" v-for="image in images" v-if="images.length" >
+            <div class="image" v-for="image in images" v-if="images.length">
                 <a :href="'#' + image.id">
-                    <img class="cover" :src="image.url" :alt="image.description" />
-                    <figcaption id="img-title" for=image>{{ image.title }}</figcaption>
+                    <img
+                        class="cover"
+                        :src="image.url"
+                        :alt="image.description"
+                    />
+                    <figcaption id="img-title" for="image">
+                        {{ image.title }}
+                    </figcaption>
                 </a>
             </div>
             <!-- @click="selectedImage = image.id" -->
             <div id="get-more-images">
-                <button id="more-button" v-if="moreImages" @click="loadMoreButton">more</button>
+                <button
+                    id="more-button"
+                    v-if="moreImages"
+                    @click="loadMoreButton"
+                >
+                    more
+                </button>
                 <div class="placeholder"></div>
             </div>
 
             <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
-            
+
             <modal-component
-            v-if="selectedImage"
-            :id="selectedImage"
-            @close="closeModal"
-            @delete="deleteImage"
+                v-if="selectedImage"
+                :id="selectedImage"
+                @close="closeModal"
+                @delete="deleteImage"
             >
             </modal-component>
-        
         </div>
-
 
         <!-- ///////////////////// OUTSIDE OF MAIN DIV ///////////////////// -->
 
@@ -85,13 +138,15 @@
         <!-- "modal-template" = name of template in Vue.component -->
         <script type="text/x-template" id="modal-template">
             <div class="component">
-                
+
                 <div id="modal-upper-left">
                     <img id="img-modal" :src="image.url" :alt="image.description">
-                    <div id="left"><a :href="'#' + (image.id + 1)"><</a></div>
+                    <div id="left">
+                        <a :href="'#' + (image.id + 1)"><</a>
+                    </div>
                 </div>
                 <!-- <div id="left" v-if="left_id"><a :href="'#' + left_id"><</a></div> -->
-                
+
                 <div class="comments">
 
                     <p id="x" @click="closeModal">X</p>
@@ -117,7 +172,7 @@
 
                     <div class="props-container" v-for="comment in comments" v-if="comments.length">
                         <p class="props-commenter">"{{ comment.comment }}"</p>
-                        
+
                         <div class="flexbox-modal">
                             <ion-icon class="icon-props" name="person-circle-outline"></ion-icon>
                             <p class="props-commenter-thin">{{ comment.username }}</p>
@@ -127,7 +182,9 @@
 
                     </div>
 
-                    <div id="right"><a :href="'#' + (image.id - 1)">></a></div>
+                    <div id="right">
+                        <a :href="'#' + (image.id - 1)">></a>
+                    </div>
                     <!-- <div id="right" v-if="right_id"><a :href="'#' + right_id">></a></div> -->
 
                 </div>
@@ -147,7 +204,7 @@
                         <ion-icon class="icon-modal" name="person-circle-outline"></ion-icon>
                         <p class="img-modal-username"><b>Uploaded by:</b> {{ image.username }}</p>
                     </div>
-                        
+
                     <div class="flexbox-modal">
                         <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
                         <p class="img-modal-date"><b>Date:</b> {{ image.created_at }}</p>
@@ -158,10 +215,8 @@
             </div>
         </script>
 
-
         <script src="/js/vue.js"></script>
         <script src="/js/axios.min.js"></script>
         <script src="/js/script.js"></script>
-
     </body>
 </html>
