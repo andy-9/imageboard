@@ -151,15 +151,16 @@ app.get("/modal-id/:id", (req, res) => {
             return db.getComments(req.params.id);
         })
         .then((commentResults) => {
-            // console.log(
-            //     "index.js, results reversed after getComments 1:",
-            //     commentResults
-            // );
+            console.log(
+                "index.js, results reversed after getComments 1:",
+                commentResults
+            );
+            commentResults.created_at = truncateDate(commentResults.created_at);
             modalInfoAndComments.push(commentResults.reverse());
-            // console.log(
-            //     "index.js, modalInfoAndComments after db.getComments ran:",
-            //     modalInfoAndComments
-            // );
+            console.log(
+                "index.js, modalInfoAndComments after db.getComments ran:",
+                modalInfoAndComments
+            );
             res.json(modalInfoAndComments);
         })
         .catch((err) => {
@@ -190,10 +191,11 @@ app.post("/comment", (req, res) => {
             //     currentComment
             // );
             userProp = currentComment.rows[0];
-            // console.log(
-            //     "index.js POST /comment, response from db.insertCurrentComment, userProp:",
-            //     userProp
-            // );
+            console.log(
+                "index.js POST /comment, response from db.insertCurrentComment, userProp:",
+                userProp
+            );
+            userProp.created_at = truncateDate(userProp.created_at);
             res.json({
                 userProp,
             });

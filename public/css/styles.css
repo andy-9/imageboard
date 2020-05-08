@@ -299,8 +299,7 @@ h2 {
     cursor: pointer;
 }
 
-#props-button:hover,
-#delete-button:hover {
+#props-button:hover {
     background-color: #a10303;
 }
 
@@ -312,6 +311,11 @@ h2 {
 #props-button:focus,
 #delete-button:focus {
     outline: none;
+}
+
+#delete-button:hover {
+    background-color: #a10303;
+    transform: scale(1.1);
 }
 
 .props-commenter {
