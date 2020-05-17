@@ -17,8 +17,6 @@ const truncateDate = (posttime) => {
         minute: "numeric",
         second: "numeric",
         hour12: false,
-        // the following makes no sense, but it is what it is
-        // took quite some rounds of testing
         timeZone: "Etc/GMT",
     }).format(posttime));
 };
@@ -45,7 +43,6 @@ const diskStorage = multer.diskStorage({
 
 const uploader = multer({
     storage: diskStorage,
-    // limit added (2MB):
     limits: {
         fileSize: 2097152,
     },
@@ -58,11 +55,11 @@ const uploader = multer({
 app.get("/images", (req, res) => {
     db.getInfoAndImage()
         .then((results) => {
-            // console.log(
-            //     "index.js, results to bring on site for getInfoAndImage:",
-            //     results
-            // );
-            // resrev = results.reverse();
+            console.log(
+                "index.js, results to bring on site for getInfoAndImage:",
+                results
+            );
+            resrev = results.reverse();
             res.json(results);
         })
         .catch((err) => {
@@ -72,11 +69,11 @@ app.get("/images", (req, res) => {
 
 ////////// GET MORE DATA FOR SITE //////////
 app.post("/load-more", (req, res) => {
-    // console.log("lastId:", lastId);
-    // console.log("req.body.lastId:", req.body.lastId);
+    console.log("lastId:", lastId);
+    console.log("req.body.lastId:", req.body.lastId);
     db.getMoreImages(req.body.lastId)
         .then((moreImages) => {
-            // console.log("index.js, moreImages in POST /load-more:", moreImages);
+            console.log("index.js, moreImages in POST /load-more:", moreImages);
             res.json(moreImages);
         })
         .catch((err) => {
@@ -88,30 +85,33 @@ app.post("/load-more", (req, res) => {
 
 // "single" is a method of uploader
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    // console.log("index.js POST /upload, uploaded (req.)file:", req.file); // uploaded file
+    console.log("index.js POST /upload, uploaded (req.)file:", req.file); // uploaded file
     filename = req.file.filename;
-    // console.log("index.js POST /upload, changed filename:", filename);
-    // console.log("index.js POST /upload, config.s3Url", config.s3Url);
+    console.log("index.js POST /upload, changed filename:", filename);
+    console.log("index.js POST /upload, config.s3Url", config.s3Url);
     let url = config.s3Url + filename;
-    // console.log("index.js POST /upload, complete new url:", url);
+    console.log("index.js POST /upload, complete new url:", url);
 
-    // console.log("index.js POST /upload, uploaded input:", req.body); // input fields from client
+    console.log("index.js POST /upload, uploaded input:", req.body); // input fields from client
     username = req.body.username;
-    // console.log("index.js POST /upload, username:", username);
+    console.log("index.js POST /upload, username:", username);
     title = req.body.title;
-    // console.log("index.js POST /upload, title:", title);
+    console.log("index.js POST /upload, title:", title);
     description = req.body.description;
-    // console.log("index.js POST /upload, description:", description);
+    console.log("index.js POST /upload, description:", description);
 
     if (req.file) {
         db.insertInfoAndImageUrl(url, username, title, description)
             .then((response) => {
-                // console.log("index.js, insertInfoAndImageUrl RETURNING INSERT data from database:", response);
+                console.log(
+                    "index.js, insertInfoAndImageUrl RETURNING INSERT data from database:",
+                    response
+                );
                 userInsert = response.rows[0];
-                // console.log(
-                //     "index.js POST /upload, response from db.insertInfoAndImageUrl, userInsert:",
-                //     userInsert
-                // );
+                console.log(
+                    "index.js POST /upload, response from db.insertInfoAndImageUrl, userInsert:",
+                    userInsert
+                );
                 res.json({
                     userInsert,
                     // success: true,
@@ -131,20 +131,20 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 
 app.get("/modal-id/:id", (req, res) => {
     let modalInfoAndComments = [];
-    // console.log("index.js, get modal id:", req.params.id);
+    console.log("index.js, get modal id:", req.params.id);
 
     // get image info for modal
     db.getModalInfo(req.params.id)
         .then((modalInfoResults) => {
-            // console.log("index.js, results after modalInfo:", modalInfoResults);
+            console.log("index.js, results after modalInfo:", modalInfoResults);
             modalInfoResults.created_at = truncateDate(
                 modalInfoResults.created_at
             );
             modalInfoAndComments.push(modalInfoResults);
-            // console.log(
-            //     "index.js, modalInfoAndComments after db.getModalInfo ran:",
-            //     modalInfoAndComments
-            // );
+            console.log(
+                "index.js, modalInfoAndComments after db.getModalInfo ran:",
+                modalInfoAndComments
+            );
         })
         .then(() => {
             // get comments for selected image
@@ -175,21 +175,21 @@ app.get("/modal-id/:id", (req, res) => {
 
 ////////// GET COMMENTS FOR MODULE //////////
 app.post("/comment", (req, res) => {
-    // console.log("index.js POST /comment, req.params:", req.params);
-    // console.log("index.js POST /comment, req.body:", req.body);
+    console.log("index.js POST /comment, req.params:", req.params);
+    console.log("index.js POST /comment, req.body:", req.body);
     username = req.body.username;
-    // console.log("index.js POST /comment, username:", username);
+    console.log("index.js POST /comment, username:", username);
     comment = req.body.comment;
-    // console.log("index.js POST /comment, comment:", comment);
+    console.log("index.js POST /comment, comment:", comment);
     image_id = req.body.image_id;
-    // console.log("index.js POST /comment, image_id:", image_id);
+    console.log("index.js POST /comment, image_id:", image_id);
 
     db.insertCurrentComment(username, comment, image_id)
         .then((currentComment) => {
-            // console.log(
-            //     "index.js, insertCurrentComment RETURNING INSERT data from database:",
-            //     currentComment
-            // );
+            console.log(
+                "index.js, insertCurrentComment RETURNING INSERT data from database:",
+                currentComment
+            );
             userProp = currentComment.rows[0];
             console.log(
                 "index.js POST /comment, response from db.insertCurrentComment, userProp:",
@@ -210,14 +210,13 @@ app.post("/comment", (req, res) => {
 app.post("/delete", (req, res) => {
     console.log("index.js, req.body.id in post /delete:", req.body.id);
     let id = req.body.id;
-    // Promise.all([db.deleteImage(id), db.deleteComments(id)])
     db.deleteComments(id)
         .then(db.deleteImage(id))
         .then((results) => {
-            // console.log(
-            //     "results in index.js for deleteImage and deleteComments:",
-            //     results
-            // );
+            console.log(
+                "results in index.js for deleteImage and deleteComments:",
+                results
+            );
             res.json(results);
         })
         .catch((err) => {
