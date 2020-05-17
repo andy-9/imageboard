@@ -16,7 +16,6 @@
 
         watch: {
             id: function () {
-                console.log("WATCHER in script.js: selectedImage changed!");
                 this.modalInfo();
             },
         }, // watch ends
@@ -96,22 +95,12 @@
 
             // close modal
             closeModal: function () {
-                console.log(
-                    "script.js, Vue.component, method closeModal, emitting"
-                );
                 this.$emit("close");
             },
 
             // delete image
             deleteImage: function (e) {
                 e.preventDefault();
-                console.log(
-                    "script.js, deleteImage is running in methods in Vue.component"
-                );
-                console.log(
-                    "script.js, this.id in deleteImage in Vue component:",
-                    this.id
-                );
                 axios.post("/delete", { id: this.id }).then((response) => {
                     console.log("deleted", response.data);
                 });
@@ -138,13 +127,11 @@
         }, // data ends
 
         mounted: function () {
-            console.log("script.js, my main Vue has mounted!");
             var each = this;
 
             axios
                 .get("/images")
                 .then(function (response) {
-                    // each.images = response.data.reverse();
                     each.images = response.data;
                 })
                 .catch(function (err) {
@@ -155,7 +142,6 @@
                 });
 
             window.addEventListener("hashchange", function () {
-                console.log("script.js, hashchange has fired!");
                 console.log("script.js, location.hash:", location.hash);
                 each.selectedImage = location.hash.slice(1);
             });
@@ -197,20 +183,10 @@
             },
 
             handleChange: function (e) {
-                console.log(
-                    "script.js, handleChange is running in methods in main Vue"
-                );
-                // console.log(
-                //     "script.js, file in handleChange in methods in main Vue:",
-                //     e.target.files[0]
-                // );
                 this.file = e.target.files[0];
             },
 
             loadMoreButton: function (e) {
-                console.log(
-                    "script.js, loadMoreButton is running in methods in main Vue"
-                );
                 e.preventDefault();
                 var each = this;
                 var lastId = {
@@ -237,15 +213,11 @@
             },
 
             closeModal: function () {
-                console.log(
-                    "script.js, closeModal is running in methods in main Vue"
-                );
                 this.selectedImage = null;
                 location.hash = "";
             },
 
             deleteImage: function (e) {
-                console.log("script.js, this in deleteImage:", e);
                 // loop through all images, check which id matches with deleted id. when match -> remove the image from that place
                 for (var i = 0; i < this.images.length; i++) {
                     if (this.images[i].id == e) {
