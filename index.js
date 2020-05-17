@@ -228,4 +228,6 @@ app.post("/delete", (req, res) => {
         });
 });
 
-app.listen(8080, () => console.log("index.js: IB server is listening."));
+app.listen(process.env.PORT || 8080, () =>
+    console.log("index.js: IB server is listening.")
+);
