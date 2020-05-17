@@ -59,7 +59,8 @@ app.get("/images", (req, res) => {
                 "index.js, results to bring on site for getInfoAndImage:",
                 results
             );
-            resrev = results.reverse();
+            resrev = results;
+            // resrev = results.reverse();
             res.json(results);
         })
         .catch((err) => {
@@ -69,7 +70,6 @@ app.get("/images", (req, res) => {
 
 ////////// GET MORE DATA FOR SITE //////////
 app.post("/load-more", (req, res) => {
-    console.log("lastId:", lastId);
     console.log("req.body.lastId:", req.body.lastId);
     db.getMoreImages(req.body.lastId)
         .then((moreImages) => {
@@ -136,13 +136,16 @@ app.get("/modal-id/:id", (req, res) => {
     // get image info for modal
     db.getModalInfo(req.params.id)
         .then((modalInfoResults) => {
-            console.log("index.js, results after modalInfo:", modalInfoResults);
+            console.log(
+                "index.js, results after getModalInfo ran:",
+                modalInfoResults
+            );
             modalInfoResults.created_at = truncateDate(
                 modalInfoResults.created_at
             );
             modalInfoAndComments.push(modalInfoResults);
             console.log(
-                "index.js, modalInfoAndComments after db.getModalInfo ran:",
+                "index.js, modalInfoAndComments-array 1 after truncation of date:",
                 modalInfoAndComments
             );
         })
@@ -151,14 +154,19 @@ app.get("/modal-id/:id", (req, res) => {
             return db.getComments(req.params.id);
         })
         .then((commentResults) => {
+            console.log("index.js, results after getComments:", commentResults);
+            for (i = 0; i < commentResults.length; i++) {
+                commentResults[i].created_at = truncateDate(
+                    commentResults[i].created_at
+                );
+            }
             console.log(
-                "index.js, results reversed after getComments 1:",
+                "results getComments after truncation of date:",
                 commentResults
             );
-            commentResults.created_at = truncateDate(commentResults.created_at);
             modalInfoAndComments.push(commentResults.reverse());
             console.log(
-                "index.js, modalInfoAndComments after db.getComments ran:",
+                "index.js, modalInfoAndComments-array 2 after truncation of date:",
                 modalInfoAndComments
             );
             res.json(modalInfoAndComments);
