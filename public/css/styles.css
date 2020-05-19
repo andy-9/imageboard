@@ -9,7 +9,8 @@
 }
 
 * {
-    max-width: 100%;
+    /* max-width: 100%; */
+    /* height: 100%; */
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -21,17 +22,12 @@
 
 body {
     background-image: url(/patterns/so-white.png);
-    /* background-image: url(/patterns/white-waves.png); */
-    /* background-image: url(/patterns/old_map_@2X.png); */
-    /* background-image: url(/patterns/full-bloom.png); */
-    /* background-image: url(/patterns/memphis-colorful.png); */
-    /* background-image: url(/patterns/congruent_pentagon.png); */
-    /* background-image: url(/patterns/more-leaves.png); */
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr 50px;
 }
 
 h1 {
-    /* letter-spacing: 13px; */
-    /* font-family: "Permanent Marker", cursive; */
     font-family: RuthlessWreckinOne-7YlK, "Baloo Tamma 2", cursive;
     font-size: 70px;
     text-align: center;
@@ -41,19 +37,19 @@ h1 {
 #main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr auto;
     align-items: center;
     justify-items: center;
     column-gap: 3%;
     row-gap: 1%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin: 0 5%;
 }
 
 /* ////////////////////////// INPUTFIELDS ////////////////////////// */
 
 #inputfields {
-    opacity: 0.9;
-    background-color: white;
+    font-family: "Baloo Tamma 2", cursive;
+    background-color: rgb(255, 255, 255, 0);
     grid-column: 1 / 4;
     height: 210px;
     width: 100%;
@@ -79,7 +75,7 @@ input {
     border: none;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 8px 6px 30px 0px grey;
+    box-shadow: 4px 2px 10px 0px grey;
 }
 
 input:hover {
@@ -92,8 +88,7 @@ input:focus {
 
 #title,
 #description,
-#username,
-#inputfile {
+#username {
     width: 350px;
 }
 
@@ -102,23 +97,56 @@ input:focus {
     justify-content: space-evenly;
 }
 
+input::placeholder {
+    font-family: "Baloo Tamma 2", cursive;
+    font-size: 20px;
+    color: grey;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+label {
+    width: 350px;
+    height: 20px;
+}
+
+#label-for-file {
+    height: 20px;
+    color: grey;
+    font-size: 20px;
+    background-color: white;
+    padding: 0 5px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 230px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    box-shadow: 4px 2px 10px 0px grey;
+}
+
 button {
-    color: white;
-    background-color: #c62828;
-    opacity: 0.9;
-    width: 150px;
-    height: 50px;
     font-size: 30px;
+    color: white;
+    background-color: rgba(190, 125, 125);
+    width: 150px;
+    height: 40px;
     text-align: center;
     border: none;
-    border-radius: 25px;
-    margin: 20px auto;
+    border-radius: 20px;
+    /* margin: 20px auto; */
     display: block;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #a10303;
+    background-color: rgb(179, 92, 92);
 }
 
 button:active {
@@ -130,6 +158,7 @@ button:focus {
 }
 
 #get-more-images {
+    margin: 5% 0;
     grid-column: 2 / 3;
 }
 
@@ -245,6 +274,7 @@ button:focus {
 a {
     color: black;
     text-decoration: none;
+    transition: color 0.3s;
 }
 
 a:hover {
@@ -274,7 +304,7 @@ h2 {
     border: none;
     border-radius: 5px;
     margin: 5px 0;
-    box-shadow: 8px 6px 30px 0px grey;
+    box-shadow: 4px 2px 10px 0px grey;
 }
 
 .flex-button {
@@ -285,7 +315,7 @@ h2 {
 #props-button,
 #delete-button {
     color: white;
-    background-color: #c62828;
+    background-color: rgba(190, 125, 125);
     width: 100px;
     height: 20px;
     font-size: 15px;
@@ -300,7 +330,7 @@ h2 {
 }
 
 #props-button:hover {
-    background-color: #a10303;
+    background-color: rgb(179, 92, 92);
 }
 
 #props-button:active,
@@ -314,7 +344,7 @@ h2 {
 }
 
 #delete-button:hover {
-    background-color: #a10303;
+    background-color: rgb(179, 92, 92);
     transform: scale(1.1);
 }
 
@@ -358,7 +388,55 @@ h2 {
     font-family: "SpriteGraffiti-Shadow", "Baloo Tamma 2", cursive;
 }
 
-@media screen and (min-width: 320px) and (max-width: 540px) {
+/* ////////////////////// FOOTER ////////////////////// */
+
+footer {
+    width: 100%;
+    grid-column: 1 / 4;
+    background-color: rgb(128, 128, 128, 0.4);
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    height: 50px;
+}
+
+#copyright {
+    color: white;
+    font-size: 16px;
+    padding: 15px 0 10px 10px;
+}
+
+.contact {
+    padding: 9px;
+}
+
+.white {
+    color: white;
+}
+
+.white:hover {
+    color: blue;
+}
+
+ion-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    transform: translateY(5px);
+}
+
+#footer-extension-left {
+    height: 49px;
+    width: 80px;
+    background-color: rgb(128, 128, 128, 0.4);
+    border: 0;
+    transform: translate(-80px, -46px);
+}
+
+#footer-extension-right {
+    height: 49px;
+    width: 76px;
+    background-color: rgb(128, 128, 128, 0.4);
+    border: 0;
+    transform: translate(200px, -46px);
 }
 
 /* Background pattern from Toptal Subtle Patterns */

@@ -118,7 +118,7 @@ app.get("/modal-id/:id", (req, res) => {
             return db.getComments(req.params.id);
         })
         .then((commentResults) => {
-            for (i = 0; i < commentResults.length; i++) {
+            for (let i = 0; i < commentResults.length; i++) {
                 commentResults[i].created_at = truncateDate(
                     commentResults[i].created_at
                 );

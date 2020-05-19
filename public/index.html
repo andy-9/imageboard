@@ -80,34 +80,38 @@
                             class="icon"
                             name="cloud-upload-outline"
                         ></ion-icon>
+                        <label id="label-for-file" for="file">choose a file</label>
                         <input
-                            id="inputfile"
+                            id="file"
+                            class="inputfile"
                             @change="handleChange"
                             type="file"
                             required
                             name="file"
+                            id="file" 
                             ref="file"
                             accept="image/*"
                         />
                     </div>
                 </div>
-
                 <button @click="uploadButtonClick">upload</button>
+
             </form>
 
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
-            <div class="image" v-for="image in images" v-if="images.length">
-                <a :href="'#' + image.id">
-                    <img
-                        class="cover"
-                        :src="image.url"
-                        :alt="image.description"
-                    />
-                    <figcaption id="img-title" for="image">
-                        {{ image.title }}
-                    </figcaption>
-                </a>
-            </div>
+                <div class="image" v-for="image in images" v-if="images.length">
+                    <a :href="'#' + image.id">
+                        <img
+                            class="cover"
+                            :src="image.url"
+                            :alt="image.description"
+                        />
+                        <figcaption id="img-title" for="image">
+                            {{ image.title }}
+                        </figcaption>
+                    </a>
+                </div>
+
             <!-- @click="selectedImage = image.id" -->
             <div id="get-more-images">
                 <button
@@ -117,8 +121,47 @@
                 >
                     more
                 </button>
-                <div class="placeholder"></div>
+                <!-- <div class="placeholder"></div> -->
             </div>
+
+            <footer>
+                <div id="copyright">© Andreas Hechler 2020</div>
+
+                <div class="contact">
+                    <a class="white" target="_blank" href="https://github.com/andy-9">
+                    <ion-icon name="logo-github">GitHub</ion-icon>
+                    </a>
+
+                    <a
+                        class="white"
+                        target="_blank"
+                        href="https://www.linkedin.com/in/andreas-hechler-810172192"
+                    >
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                    </a>
+
+                    <a
+                        class="white"
+                        target="_blank"
+                        href="https://www.xing.com/profile/Andreas_Hechler10"
+                    >
+                    <ion-icon name="logo-xing"></ion-icon>
+                    </a>
+
+                    <a
+                        class="white"
+                        target="_blank"
+                        href="https://twitter.com/HechlerAndreas"
+                    >
+                    <ion-icon name="logo-twitter"></ion-icon>
+                    </a>
+
+                </div>
+
+                <div id="footer-extension-left"></div>
+                <div id="footer-extension-right"></div>
+
+            </footer>
 
             <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
 
@@ -166,7 +209,6 @@
 
                         <div class="flex-button">
                             <button id="props-button" @click="postComment">submit</button>
-                            <button id="delete-button" @click="deleteImage">delete pic</button>
                         </div>
                     </div>
 
@@ -194,7 +236,7 @@
                         <ion-icon class="icon-modal" name="information-circle-outline"></ion-icon>
                         <figcaption class="img-title-modal"><b>Title:</b> {{ image.title }}</figcaption>
                     </div>
-
+                    
                     <div class="flexbox-modal">
                         <ion-icon class="icon-modal" name="create-outline"></ion-icon>
                         <p class="img-modal-description"><b>Description:</b> {{ image.description }}</p>
@@ -209,6 +251,8 @@
                         <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
                         <p class="img-modal-date"><b>Date:</b> {{ image.created_at }}</p>
                     </div>
+                    
+                    <button id="delete-button" @click="deleteImage">delete pic</button>
 
                 </div>
 
