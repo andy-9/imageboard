@@ -94,7 +94,9 @@
                         />
                     </div>
                 </div>
-                <button @click="uploadButtonClick">upload</button>
+                <div id="upload-button">
+                    <button @click="uploadButtonClick">upload</button>
+                </div>
 
             </form>
 
@@ -251,7 +253,7 @@
                         <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
                         <p class="img-modal-date"><b>Date:</b> {{ image.created_at }}</p>
                     </div>
-                    
+
                     <button id="delete-button" @click="deleteImage">delete pic</button>
 
                 </div>

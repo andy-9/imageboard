@@ -9,8 +9,6 @@
 }
 
 * {
-    /* max-width: 100%; */
-    /* height: 100%; */
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -137,11 +135,8 @@ button {
     background-color: rgba(190, 125, 125);
     width: 150px;
     height: 40px;
-    text-align: center;
     border: none;
     border-radius: 20px;
-    /* margin: 20px auto; */
-    display: block;
     cursor: pointer;
 }
 
@@ -155,6 +150,10 @@ button:active {
 
 button:focus {
     outline: none;
+}
+
+#upload-button {
+    text-align: center;
 }
 
 #get-more-images {
@@ -179,8 +178,6 @@ button:focus {
     height: 88%;
     padding: 1%;
     object-fit: cover;
-    /* object-fit: scale-down; */
-    /* object-fit: contain; */
     overflow: hidden;
     border-radius: 5% 5% 0 0;
 }
@@ -193,16 +190,13 @@ button:focus {
 /* ////////////////////////// MODAL ////////////////////////// */
 
 .component {
-    /* background-image: url(/patterns/so-white.png); */
     background: white;
     position: fixed;
-    /* height: 100vh; */
     overflow: scroll;
     top: 0;
     bottom: 0;
     right: 4%;
     left: 4%;
-    /* opacity: 0.98; */
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 4fr 1fr;
@@ -227,7 +221,6 @@ button:focus {
     cursor: pointer;
     position: absolute;
     top: 60%;
-    /* transform: translateX(-1px); */
     z-index: 5;
 }
 
@@ -279,8 +272,6 @@ a {
 
 a:hover {
     color: grey;
-    /* color: blue; */
-    /* text-decoration: underline blue; */
 }
 
 h2 {
@@ -323,7 +314,6 @@ h2 {
     padding: 0;
     border: none;
     border-radius: 10px;
-    /* margin: 20px auto; */
     margin: 5px 0 20px 20px;
     display: block;
     cursor: pointer;
