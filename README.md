@@ -11,8 +11,6 @@ The board works with state, un-/mounting, dynamic routing, click handlers, event
 
 **Features:** upload of images with title, description and username, each image can be clicked and displayed in large with more info and the possibility to comment and also delete the image, more images can be loaded
 
----
-
 ## License
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
