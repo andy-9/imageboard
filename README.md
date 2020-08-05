@@ -3,7 +3,7 @@
 
 The theme of this <a href="http://graf-streetart.herokuapp.com/" target="_blank">imageboard is graffiti and street art</a>.
 
-The board works with state, un-/mounting, dynamic routing, click handlers, event-emitters and watchers. It is protected against SQL injection, clickjacking, XSS and CSRF attacks.
+This Single Page Application works with state, un-/mounting, dynamic routing, click handlers, event-emitters and watchers. It is protected against SQL injection, clickjacking, XSS and CSRF attacks.
 
 <img src="/public/imageboard.gif" alt="gif to display how imageboard works">
 
