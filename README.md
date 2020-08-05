@@ -1,4 +1,4 @@
-# imageboard
+# Imageboard
 ## Imageboard with graffiti and street-art as topic
 
 The theme of this <a href="http://graf-streetart.herokuapp.com/" target="_blank">imageboard is graffiti and street art</a>.
