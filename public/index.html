@@ -26,8 +26,8 @@
 
         <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
         <div id="main">
-            <!-- ///////// INPUT FIELDS ///////// -->
 
+            <!-- ///////// INPUT FIELDS ///////// -->
             <form id="inputfields" action="">
                 <div class="flexbox">
                     <div>
@@ -68,7 +68,7 @@
                         <input
                             id="username"
                             v-model="username"
-                            type="text"
+                            type="text" required
                             maxlength="24"
                             name="username"
                             placeholder="username"
@@ -101,10 +101,10 @@
             </form>
 
             <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
-                <div class="image" v-for="image in images" v-if="images.length">
-                    <a :href="'#' + image.id">
-                        <img
-                            class="cover"
+            <div class="image" v-for="image in images" v-if="images.length">
+                <a :href="'#' + image.id">
+                    <img
+                    class="cover"
                             :src="image.url"
                             :alt="image.description"
                         />
@@ -114,7 +114,7 @@
                     </a>
                 </div>
 
-            <!-- @click="selectedImage = image.id" -->
+            <!-- ///////// MORE BUTTON ///////// -->
             <div id="get-more-images">
                 <button
                     id="more-button"
@@ -123,11 +123,20 @@
                 >
                     more
                 </button>
-                <!-- <div class="placeholder"></div> -->
             </div>
 
+            <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
+
+            <modal-component
+                v-if="selectedImage"
+                :id="selectedImage"
+                @close="closeModal"
+                @delete="deleteImage"
+            >
+            </modal-component>
+
             <footer>
-                <div id="copyright">© Andreas Hechler 2020</div>
+                <div id="copyright">© 2020 Andreas Hechler</div>
 
                 <div class="contact">
                     <a class="white" target="_blank" href="https://github.com/andy-9">
@@ -164,24 +173,14 @@
                 <div id="footer-extension-right"></div>
 
             </footer>
-
-            <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
-
-            <modal-component
-                v-if="selectedImage"
-                :id="selectedImage"
-                @close="closeModal"
-                @delete="deleteImage"
-            >
-            </modal-component>
+            
         </div>
 
-        <!-- ///////////////////// OUTSIDE OF MAIN DIV ///////////////////// -->
 
         <!-- ///////// MODAL COMPONENT OUTSIDE "MAIN" DIV ///////// -->
         <!-- template for "modal-component" inside the main div: -->
-        <!-- "modal-template" = name of template in Vue.component -->
         <script type="text/x-template" id="modal-template">
+            <!-- "modal-template" = name of template in Vue component -->
             <div class="component">
 
                 <div id="modal-upper-left">
@@ -190,12 +189,11 @@
                         <a :href="'#' + (image.id + 1)"><</a>
                     </div>
                 </div>
-                <!-- <div id="left" v-if="left_id"><a :href="'#' + left_id"><</a></div> -->
+
 
                 <div class="comments">
 
                     <p id="x" @click="closeModal">X</p>
-
                     <h2>Props</h2>
 
                     <div>
@@ -229,7 +227,6 @@
                     <div id="right">
                         <a :href="'#' + (image.id - 1)">></a>
                     </div>
-                    <!-- <div id="right" v-if="right_id"><a :href="'#' + right_id">></a></div> -->
 
                 </div>
 

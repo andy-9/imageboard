@@ -1,6 +1,10 @@
 {
     "name": "imageboard",
     "version": "1.0.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andy-9/imageboard.git"
+    },
     "description": "",
     "main": "index.js",
     "scripts": {

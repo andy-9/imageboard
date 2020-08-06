@@ -29,12 +29,11 @@ exports.upload = (req, res, next) => {
             ContentType: mimetype, // type of file
             ContentLength: size,
         })
-        .promise(); // returns whole function as a promise, which we then .then and .catch:
+        .promise(); // returns whole function as a promise
 
     promise
         .then(() => {
-            console.log("s3.js: amazon put object complete, everything worked");
-            next(); // necessary since it's a middleware function
+            next();
             fs.unlink(path, () => {}); // keeps uploads clean, is optional
         })
         .catch((err) => {

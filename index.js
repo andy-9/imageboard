@@ -7,6 +7,7 @@ const config = require("./config");
 app.use(express.static("public"));
 app.use(express.json());
 
+////////////////// DATE FORMATTING //////////////////
 const truncateDate = (posttime) => {
     return (posttime = new Intl.DateTimeFormat("en-GB", {
         weekday: "long",
@@ -22,7 +23,6 @@ const truncateDate = (posttime) => {
 };
 
 ////////////////// IMAGE UPLOAD BOILERPLATE //////////////////
-
 // multer saves files to our hard drive:
 const multer = require("multer");
 const uidSafe = require("uid-safe");
@@ -48,15 +48,10 @@ const uploader = multer({
     },
 });
 
-////////////////// GET AND POST ROUTES //////////////////
-
 ////////// GET DATA FOR SITE //////////
-
 app.get("/images", (req, res) => {
     db.getInfoAndImage()
         .then((results) => {
-            resrev = results;
-            // resrev = results.reverse();
             res.json(results);
         })
         .catch((err) => {
@@ -76,7 +71,6 @@ app.post("/load-more", (req, res) => {
 });
 
 ////////// POST DATA FROM SITE - UPLOAD TO AWS & PUT IN DATABASE //////////
-
 // "single" is a method of uploader
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     filename = req.file.filename;
@@ -104,9 +98,9 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 ////////// GET DATA FOR MODULE //////////
-
 app.get("/modal-id/:id", (req, res) => {
     let modalInfoAndComments = [];
+
     db.getModalInfo(req.params.id)
         .then((modalInfoResults) => {
             modalInfoResults.created_at = truncateDate(
@@ -124,6 +118,7 @@ app.get("/modal-id/:id", (req, res) => {
                 );
             }
             modalInfoAndComments.push(commentResults.reverse());
+
             res.json(modalInfoAndComments);
         })
         .catch((err) => {

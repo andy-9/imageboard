@@ -18,7 +18,17 @@ module.exports.getInfoAndImage = () => {
         });
 };
 
-// LOAD MORE IMAGES WHEN BUTTON IS CLICKED
+// INSERT DATA FROM USER INTO TABLE "IMAGES"
+module.exports.insertInfoAndImageUrl = (url, username, title, description) => {
+    return db.query(
+        `INSERT INTO images (url, username, title, description)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *;`,
+        [url, username, title, description]
+    );
+};
+
+// LOAD MORE IMAGES WHEN "MORE" BUTTON IS CLICKED
 exports.getMoreImages = (lastId) => {
     return db
         .query(
@@ -33,24 +43,9 @@ exports.getMoreImages = (lastId) => {
             [lastId]
         )
         .then((moreImages) => {
-            // console.log(
-            //     "db.js, moreImages.rows in getMoreImages:",
-            //     moreImages.rows
-            // );
             return moreImages.rows;
         });
 };
-
-// INSERT DATA FROM USER INTO TABLE "IMAGES"
-module.exports.insertInfoAndImageUrl = (url, username, title, description) => {
-    return db.query(
-        `INSERT INTO images (url, username, title, description)
-            VALUES ($1, $2, $3, $4)
-            RETURNING *;`,
-        [url, username, title, description]
-    );
-};
-// RETURNING *;`,
 
 // GETS EVERYTHING FROM TABLE "IMAGES" FOR MODAL-ID
 module.exports.getModalInfo = (id) => {
@@ -74,7 +69,6 @@ module.exports.getComments = (image_id) => {
             [image_id]
         )
         .then((result) => {
-            // console.log("result in db.js in getComments:", result.rows);
             return result.rows;
         });
 };
@@ -89,6 +83,7 @@ module.exports.insertCurrentComment = (username, comment, image_id) => {
     );
 };
 
+// DELETE IMAGE
 module.exports.deleteImage = (id) => {
     return db.query(
         `DELETE FROM images
@@ -97,6 +92,7 @@ module.exports.deleteImage = (id) => {
     );
 };
 
+// DELETE COMMENTS FROM DELETED IMAGE
 module.exports.deleteComments = (id) => {
     return db.query(
         `DELETE FROM comments
@@ -104,33 +100,3 @@ module.exports.deleteComments = (id) => {
         [id]
     );
 };
-
-// DELETE IMAGE & COMMENTS
-// module.exports.deleteImage = (id) => {
-//     return db.query(
-//         `DELETE FROM images
-//         WHERE images.id
-//             (SELECT image_id
-//             FROM comments
-//             WHERE comments.image_id) = $1;`,
-//         [id]
-//     );
-// };
-
-// module.exports.deleteImage = (id) => {
-//     return db.query(
-//         `DELETE images, comments
-//         FROM images
-//         INNER JOIN comments
-//         ON comments.image_id = images.id
-//         WHERE images.id = $1`,
-//         [id]
-//     );
-// };
-
-// module.exports.deleteImage = (id) => {
-//     return db.query(`
-//         DELETE FROM images
-//         USING comments
-//         WHERE images.id = comments.image_id;`);
-// };
