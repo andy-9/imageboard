@@ -4,9 +4,7 @@
     //////////////// VUE COMPONENT ////////////////
     Vue.component("modal-component", {
         // first argument: "modal-component" = name of component
-
-        template: "#modal-template", // second argument: object with id/# ("modal-template") in script-tag in index.html
-
+        template: "#modal-template", // second argument: object with id in script-tag in index.html
         props: ["id"], // array, names camelCase, refers to modal inside main div in index.html
 
         mounted: function () {
@@ -29,15 +27,13 @@
                 username: "",
                 comment: "",
                 created_at: "",
-                // leftleft_id: "",
-                // right_id: "",
             };
         }, // data ends
 
         methods: {
             // get modal infos (image, input fields, id, date)
             modalInfo: function () {
-                var each = this; // refers to modal inside main div in index.html
+                var each = this;
 
                 // axios-request to the server.js sending the id --> get all the information for that id
                 axios
@@ -53,7 +49,7 @@
                             each.image = response.data[0];
                             each.comments = response.data[1];
                         }
-                        // the above is passed to "data" a few lines below
+                        // the above is passed to "data" in main Vue below
                     })
                     .catch(function (err) {
                         console.log(
@@ -66,10 +62,8 @@
 
             // get current comment
             postComment: function (e) {
-                // prevents the page from reloading:
-                e.preventDefault();
-                // 'this' allows me to see all the properties of data
-                var each = this;
+                e.preventDefault(); // prevents the page from reloading:
+                var each = this; // 'this' allows me to see all the properties of data
                 var commentInfo = {
                     username: this.username,
                     comment: this.comment,
@@ -84,7 +78,7 @@
                     })
                     .catch(function (err) {
                         console.log(
-                            "CATCH in script.js in axios POST /comment in methods in component Vue:",
+                            "CATCH in script.js in axios postComment in methods:",
                             err
                         );
                     });
@@ -101,6 +95,7 @@
             // delete image
             deleteImage: function (e) {
                 e.preventDefault();
+
                 axios.post("/delete", { id: this.id }).then((response) => {
                     console.log("deleted", response.data);
                 });
@@ -118,7 +113,6 @@
             images: [],
             // make modal pop open automatically when page initially loads, gives us link sharing functionality:
             selectedImage: location.hash.slice(1),
-            // selectedImage: null,
             title: "",
             description: "",
             username: "",
@@ -142,17 +136,14 @@
                 });
 
             window.addEventListener("hashchange", function () {
-                console.log("script.js, location.hash:", location.hash);
                 each.selectedImage = location.hash.slice(1);
             });
         }, // mounted ends
 
         methods: {
             uploadButtonClick: function (e) {
-                // prevents the page from reloading:
                 e.preventDefault();
-                // 'this' allows me to see all the properties of data
-                // we NEED to use FormData to send a file to the server
+                var each = this;
                 var formData = new FormData();
                 // append() is a method in FormData to add properties in ("key", value)-pairs
                 formData.append("title", this.title);
@@ -160,12 +151,9 @@
                 formData.append("username", this.username);
                 formData.append("file", this.file);
 
-                var each = this;
-
                 axios
                     .post("/upload", formData)
                     .then(function (resp) {
-                        // data from index.js added to index 0 in data in this file:
                         each.images.unshift(resp.data.userInsert);
                     })
                     .catch(function (err) {
@@ -174,11 +162,10 @@
                             err
                         );
                     });
-                // clear input fields:
+
                 this.title = "";
                 this.description = "";
                 this.username = "";
-                // this.file = null; // does not work
                 this.$refs.file.value = "";
             },
 
@@ -192,6 +179,7 @@
                 var lastId = {
                     lastId: this.images[this.images.length - 1].id,
                 };
+
                 axios
                     .post("/load-more", lastId)
                     .then(function (response) {
@@ -219,7 +207,7 @@
 
             deleteImage: function (e) {
                 // loop through all images, check which id matches with deleted id. when match -> remove the image from that place
-                for (var i = 0; i < this.images.length; i++) {
+                for (let i = 0; i < this.images.length; i++) {
                     if (this.images[i].id == e) {
                         // remove 1 element from that index:
                         this.images.splice(i, 1);
