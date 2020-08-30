@@ -22,7 +22,7 @@ exports.upload = (req, res, next) => {
 
     const promise = s3
         .putObject({
-            Bucket: "spicedling", // spiced' creds
+            Bucket: "spicedling", // spiced' credentials
             ACL: "public-read", // ACL public-read: once the file is uploaded anyone can see the file
             Key: filename,
             Body: fs.createReadStream(path), // stream file to amazon
