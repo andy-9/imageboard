@@ -22,7 +22,7 @@ exports.upload = (req, res, next) => {
 
     const promise = s3
         .putObject({
-            Bucket: "spicedling", // spiced' credentials
+            Bucket: "imageboard23",
             ACL: "public-read", // ACL public-read: once the file is uploaded anyone can see the file
             Key: filename,
             Body: fs.createReadStream(path), // stream file to amazon
@@ -34,7 +34,7 @@ exports.upload = (req, res, next) => {
     promise
         .then(() => {
             next();
-            fs.unlink(path, () => {}); // keeps uploads clean, is optional
+            fs.unlink(path, () => { }); // keeps uploads clean, is optional
         })
         .catch((err) => {
             console.log("error in upload put object in s3.js:", err);
