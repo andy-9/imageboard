@@ -1,265 +1,202 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Imageboard</title>
-        <link rel="stylesheet" href="/css/styles.css" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600&display=swap"
-            rel="stylesheet"
-        />
-        <script
-            type="module"
-            src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
-        ></script>
-        <script
-            nomodule=""
-            src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"
-        ></script>
-    </head>
+<html lang="en">
 
-    <body>
-        <h1>-> Graffiti & Street Art *</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imageboard</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;600&display=swap" rel="stylesheet" />
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
+</head>
 
-        <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
-        <div id="main">
+<body>
+    <h1>-> Graffiti & Street Art *</h1>
 
-            <!-- ///////// INPUT FIELDS ///////// -->
-            <form id="inputfields" action="">
-                <div class="flexbox">
-                    <div>
-                        <ion-icon
-                            class="icon"
-                            name="information-circle-outline"
-                        ></ion-icon>
-                        <input
-                            id="title"
-                            v-model="title"
-                            type="text"
-                            required
-                            maxlength="24"
-                            name="title"
-                            placeholder="title"
-                        />
-                    </div>
+    <!-- ///////////////////// INSIDE OF MAIN DIV ///////////////////// -->
+    <div id="main">
 
-                    <div>
-                        <ion-icon class="icon" name="create-outline"></ion-icon>
-                        <input
-                            id="description"
-                            v-model="description"
-                            type="text"
-                            maxlength="40"
-                            name="description"
-                            placeholder="description"
-                        />
-                    </div>
+        <!-- ///////// INPUT FIELDS ///////// -->
+        <form id="inputfields" action="">
+            <div class="flexbox">
+                <div>
+                    <ion-icon class="icon" name="information-circle-outline"></ion-icon>
+                    <input id="title" v-model="title" type="text" required maxlength="24" name="title"
+                        placeholder="title" />
                 </div>
 
-                <div class="flexbox">
-                    <div>
-                        <ion-icon
-                            class="icon"
-                            name="person-circle-outline"
-                        ></ion-icon>
-                        <input
-                            id="username"
-                            v-model="username"
-                            type="text" required
-                            maxlength="24"
-                            name="username"
-                            placeholder="username"
-                        />
-                    </div>
-
-                    <div>
-                        <ion-icon
-                            class="icon"
-                            name="cloud-upload-outline"
-                        ></ion-icon>
-                        <label id="label-for-file" for="file">choose a file</label>
-                        <input
-                            id="file"
-                            class="inputfile"
-                            @change="handleChange"
-                            type="file"
-                            required
-                            name="file"
-                            id="file" 
-                            ref="file"
-                            accept="image/*"
-                        />
-                    </div>
+                <div>
+                    <ion-icon class="icon" name="create-outline"></ion-icon>
+                    <input id="description" v-model="description" type="text" maxlength="40" name="description"
+                        placeholder="description" />
                 </div>
-                <div id="upload-button">
-                    <button @click="uploadButtonClick">upload</button>
-                </div>
-
-            </form>
-
-            <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
-            <div class="image" v-for="image in images" v-if="images.length">
-                <a :href="'#' + image.id">
-                    <img
-                    class="cover"
-                            :src="image.url"
-                            :alt="image.description"
-                        />
-                        <figcaption id="img-title" for="image">
-                            {{ image.title }}
-                        </figcaption>
-                    </a>
-                </div>
-
-            <!-- ///////// MORE BUTTON ///////// -->
-            <div id="get-more-images">
-                <button
-                    id="more-button"
-                    v-if="moreImages"
-                    @click="loadMoreButton"
-                >
-                    more
-                </button>
             </div>
 
-            <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
-
-            <modal-component
-                v-if="selectedImage"
-                :id="selectedImage"
-                @close="closeModal"
-                @delete="deleteImage"
-            >
-            </modal-component>
-
-            <footer>
-                <div id="copyright">© 2020 Andreas Hechler</div>
-
-                <div class="contact">
-                    <a class="white" target="_blank" href="https://github.com/andy-9">
-                    <ion-icon name="logo-github">GitHub</ion-icon>
-                    </a>
-
-                    <a
-                        class="white"
-                        target="_blank"
-                        href="https://www.linkedin.com/in/andreas-hechler-810172192"
-                    >
-                    <ion-icon name="logo-linkedin"></ion-icon>
-                    </a>
-
-                    <a
-                        class="white"
-                        target="_blank"
-                        href="https://www.xing.com/profile/Andreas_Hechler10"
-                    >
-                    <ion-icon name="logo-xing"></ion-icon>
-                    </a>
-
-                    <a
-                        class="white"
-                        target="_blank"
-                        href="https://twitter.com/HechlerAndreas"
-                    >
-                    <ion-icon name="logo-twitter"></ion-icon>
-                    </a>
-
+            <div class="flexbox">
+                <div>
+                    <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+                    <input id="username" v-model="username" type="text" required maxlength="24" name="username"
+                        placeholder="username" />
                 </div>
 
-                <div id="footer-extension-left"></div>
-                <div id="footer-extension-right"></div>
+                <div>
+                    <ion-icon class="icon" name="cloud-upload-outline"></ion-icon>
+                    <label id="label-for-file" for="file">
+                        <span v-if="value">selected file: {{value.name}}</span>
+                        <span v-else>choose a file</span>
+                    </label>
+                    <input id="file" class="inputfile" @change="handleChange" type="file" accept="image/*" />
+                </div>
+            </div>
+            <div id="upload-button">
+                <button @click="uploadButtonClick">upload</button>
+            </div>
 
-            </footer>
-            
+        </form>
+
+        <!-- ///////// RENDERING IMAGES + TITLES ///////// -->
+        <div class="image" v-for="image in images" v-if="images.length">
+            <a :href="'#' + image.id">
+                <img class="cover" :src="image.url" :alt="image.description" />
+                <figcaption id="img-title" for="image">
+                    {{ image.title }}
+                </figcaption>
+            </a>
+        </div>
+
+        <!-- ///////// MORE BUTTON ///////// -->
+        <div id="get-more-images">
+            <button id="more-button" v-if="moreImages" @click="loadMoreButton">
+                more
+            </button>
+        </div>
+
+        <!-- ///////// MODAL COMPONENT INSIDE MAIN DIV ///////// -->
+
+        <modal-component v-if="selectedImage" :id="selectedImage" @close="closeModal" @delete="deleteImage">
+        </modal-component>
+
+        <footer>
+            <div id="copyright">© 2020 Andreas Hechler</div>
+
+            <div class="contact">
+                <a class="white" target="_blank" rel="noopener" href="https://github.com/andy-9">
+                    <ion-icon name="logo-github">GitHub</ion-icon>
+                </a>
+
+                <a class="white" target="_blank" rel="noopener"
+                    href="https://www.linkedin.com/in/andreas-hechler-810172192">
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                </a>
+
+                <a class="white" target="_blank" rel="noopener" href="https://www.xing.com/profile/Andreas_Hechler10">
+                    <ion-icon name="logo-xing"></ion-icon>
+                </a>
+
+                <a class="white" target="_blank" rel="noopener" href="https://twitter.com/HechlerAndreas">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                </a>
+
+            </div>
+
+            <div id="footer-extension-left"></div>
+            <div id="footer-extension-right"></div>
+
+        </footer>
+
+    </div>
+
+
+    <!-- ///////// MODAL COMPONENT OUTSIDE "MAIN" DIV ///////// -->
+    <!-- template for "modal-component" inside the main div: -->
+    <script type="text/x-template" id="modal-template">
+            <!-- "modal-template" = name of template in Vue component -->
+    <div class="component">
+
+        <div id="modal-upper-left">
+            <img id="img-modal" :src="image.url" :alt="image.description">
+            <div id="left">
+                <a :href="'#' + (image.id + 1)">
+                    << /a>
+            </div>
         </div>
 
 
-        <!-- ///////// MODAL COMPONENT OUTSIDE "MAIN" DIV ///////// -->
-        <!-- template for "modal-component" inside the main div: -->
-        <script type="text/x-template" id="modal-template">
-            <!-- "modal-template" = name of template in Vue component -->
-            <div class="component">
+        <div class="comments">
 
-                <div id="modal-upper-left">
-                    <img id="img-modal" :src="image.url" :alt="image.description">
-                    <div id="left">
-                        <a :href="'#' + (image.id + 1)"><</a>
-                    </div>
+            <p id="x" @click="closeModal">X</p>
+            <h2>Props</h2>
+
+            <div>
+                <div>
+                    <ion-icon class="props-icon" name="create-outline"></ion-icon>
+                    <input class="props-input" v-model="comment" type="text" maxlength="40" name="comment"
+                        placeholder="props">
                 </div>
 
-
-                <div class="comments">
-
-                    <p id="x" @click="closeModal">X</p>
-                    <h2>Props</h2>
-
-                    <div>
-                        <div>
-                            <ion-icon class="props-icon" name="create-outline"></ion-icon>
-                            <input class="props-input" v-model="comment" type="text" maxlength="40" name="comment" placeholder= "props">
-                        </div>
-
-                        <div>
-                            <ion-icon class="props-icon" name="person-circle-outline"></ion-icon>
-                            <input class="props-input" v-model="username" type="text" maxlength="24" name="username" placeholder= "username">
-                        </div>
-
-                        <div class="flex-button">
-                            <button id="props-button" @click="postComment">submit</button>
-                        </div>
-                    </div>
-
-                    <div class="props-container" v-for="comment in comments" v-if="comments.length">
-                        <p class="props-commenter">"{{ comment.comment }}"</p>
-
-                        <div class="flexbox-modal">
-                            <ion-icon class="icon-props" name="person-circle-outline"></ion-icon>
-                            <p class="props-commenter-thin">{{ comment.username }}</p>
-                            <ion-icon class="icon-props distance" name="calendar-outline"></ion-icon>
-                            <p class="props-commenter-thin">{{ comment.created_at }}</p>
-                        </div>
-
-                    </div>
-
-                    <div id="right">
-                        <a :href="'#' + (image.id - 1)">></a>
-                    </div>
-
+                <div>
+                    <ion-icon class="props-icon" name="person-circle-outline"></ion-icon>
+                    <input class="props-input" v-model="username" type="text" maxlength="24" name="username"
+                        placeholder="username">
                 </div>
 
-                <div id="image-info">
-                    <div class="flexbox-modal">
-                        <ion-icon class="icon-modal" name="information-circle-outline"></ion-icon>
-                        <figcaption class="img-title-modal"><b>Title:</b> {{ image.title }}</figcaption>
-                    </div>
-                    
-                    <div class="flexbox-modal">
-                        <ion-icon class="icon-modal" name="create-outline"></ion-icon>
-                        <p class="img-modal-description"><b>Description:</b> {{ image.description }}</p>
-                    </div>
+                <div class="flex-button">
+                    <button id="props-button" @click="postComment">submit</button>
+                </div>
+            </div>
 
-                    <div class="flexbox-modal">
-                        <ion-icon class="icon-modal" name="person-circle-outline"></ion-icon>
-                        <p class="img-modal-username"><b>Uploaded by:</b> {{ image.username }}</p>
-                    </div>
+            <div class="props-container" v-for="comment in comments" v-if="comments.length">
+                <p class="props-commenter">"{{ comment.comment }}"</p>
 
-                    <div class="flexbox-modal">
-                        <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
-                        <p class="img-modal-date"><b>Date:</b> {{ image.created_at }}</p>
-                    </div>
-
-                    <button id="delete-button" @click="deleteImage">delete pic</button>
-
+                <div class="flexbox-modal">
+                    <ion-icon class="icon-props" name="person-circle-outline"></ion-icon>
+                    <p class="props-commenter-thin">{{ comment.username }}</p>
+                    <ion-icon class="icon-props distance" name="calendar-outline"></ion-icon>
+                    <p class="props-commenter-thin">{{ comment.created_at }}</p>
                 </div>
 
             </div>
-        </script>
 
-        <script src="/js/vue.js"></script>
-        <script src="/js/axios.min.js"></script>
-        <script src="/js/script.js"></script>
-    </body>
+            <div id="right">
+                <a :href="'#' + (image.id - 1)">></a>
+            </div>
+
+        </div>
+
+        <div id="image-info">
+            <div class="flexbox-modal">
+                <ion-icon class="icon-modal" name="information-circle-outline"></ion-icon>
+                <figcaption class="img-title-modal"><b>Title:</b> {{ image.title }}</figcaption>
+            </div>
+
+            <div class="flexbox-modal">
+                <ion-icon class="icon-modal" name="create-outline"></ion-icon>
+                <p class="img-modal-description"><b>Description:</b> {{ image.description }}</p>
+            </div>
+
+            <div class="flexbox-modal">
+                <ion-icon class="icon-modal" name="person-circle-outline"></ion-icon>
+                <p class="img-modal-username"><b>Uploaded by:</b> {{ image.username }}</p>
+            </div>
+
+            <div class="flexbox-modal">
+                <ion-icon class="icon-modal" name="calendar-outline"></ion-icon>
+                <p class="img-modal-date"><b>Date:</b> {{ image.created_at }}</p>
+            </div>
+
+            <button id="delete-button" @click="deleteImage">delete pic</button>
+
+        </div>
+
+    </div>
+    </script>
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+
 </html>
