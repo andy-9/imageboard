@@ -20,6 +20,7 @@
         "aws-sdk": "^2.476.0",
         "axios": "^0.21.1",
         "express": "^4.14.0",
+        "express-rate-limit": "^6.7.0",
         "multer": "^1.2.0",
         "spiced-pg": "^1.0.0",
         "uid-safe": "^2.1.4"

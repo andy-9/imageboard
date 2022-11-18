@@ -3,6 +3,7 @@ const app = express();
 const db = require("./db.js");
 const s3 = require("./s3");
 const config = require("./config");
+const rateLimit = require('express-rate-limit')
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -72,7 +73,19 @@ app.post("/load-more", (req, res) => {
 
 ////////// POST DATA FROM SITE - UPLOAD TO AWS & PUT IN DATABASE //////////
 // "single" is a method of uploader
-app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+
+// limit upload to 5 images/h
+const uploadLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 5, // Limit each IP to 5 create account requests per `window` (here, per hour)
+    message:
+        'Too many accounts created from this IP, please try again after an hour',
+    standardHeaders: false, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    keyGenerator: (request, response) => "snowflake",
+})
+
+app.post("/upload", uploadLimiter, uploader.single("file"), s3.upload, (req, res) => {
     filename = req.file.filename;
     let url = config.s3Url + filename;
     username = req.body.username;
