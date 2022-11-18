@@ -1,5 +1,6 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
+const { exec } = require('child_process');
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
@@ -17,6 +18,9 @@ exports.upload = (req, res, next) => {
     if (!req.file) {
         console.log("req.file isn't there");
         return res.sendStatus(500);
+    }
+    if (process.env.NODE_ENV == "production") {
+        exec('mail -s "Upload von neuem Bild" info@andreashechler.com < /dev/null')
     }
     const { filename, mimetype, size, path } = req.file;
 
