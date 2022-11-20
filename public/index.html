@@ -127,7 +127,7 @@
 
         <div class="comments">
 
-            <p id="x" @click="closeModal">X</p>
+            <p id="x" @click="closeModal" @keydown.esc="closeModal" @keyup.esc="closeModal">X</p>
             <h2>Props</h2>
 
             <div>

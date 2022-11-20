@@ -138,6 +138,12 @@
             window.addEventListener("hashchange", function () {
                 each.selectedImage = location.hash.slice(1);
             });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    this.closeModal()
+                }
+            });
         }, // mounted ends
 
         methods: {
